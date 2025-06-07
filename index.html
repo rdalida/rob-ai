@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rob AI</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background-image: url('assets/background.png'); /* 🔁 Replace with actual image */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      background: rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ebeae8;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-right: 2rem; /* 👈 Reduce or remove this */
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #F5BD02;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 2rem;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.2);  /* 👈 transparent background */
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      min-width: 150px;
+      box-shadow: none;                     /* 👈 removes drop shadow */
+      border: 1px solid rgba(255, 255, 255, 0.1); /* 👈 optional soft border */
+      backdrop-filter: blur(6px);           /* 👈 optional for modern glassy look */
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.5rem 0;
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .dropdown-content a:hover {
+      color: #F5BD02;
+      background-color: rgba(255, 255, 255, 0.05); /* optional soft highlight */
+    }
+
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .hero {
+      max-width: 700px;
+      padding: 2rem 3rem;
+      margin: 12rem 9rem;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      text-align: left;
+      color: #ffffff;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #cccccc;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn.primary {
+      background-color: #F5BD02;
+      color: #000;
+    }
+
+    .btn.secondary {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="stars"></div>
+
+  <header>
+    <div class="logo">ROB AI</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="about.html">About</a>
+      <div class="dropdown">
+        <a href="#">Resources ▾</a>
+        <div class="dropdown-content">
+          <a href="rag.html">📊 RAG Demo</a>
+          <!-- Add more links here -->
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>Empowering Teams</h1>
+    <h1>with AI</h1>
+    <p>Explore practical tools, walkthroughs, and interactive demos to master AI fundamentals and applied use cases.</p>
+    <div class="hero-buttons">
+      <a href="rag.html" class="btn primary">Get Started</a>
+      <a href="#resources" class="btn secondary">Explore Resources</a>
+    </div>
+  </div>
+
+<script>
+  function createShootingStar() {
+    const star = document.createElement("div");
+    star.className = "shooting-star";
+    star.style.position = "fixed";
+    star.style.top = Math.random() * 30 + "%";
+    star.style.left = "-5%";
+    star.style.width = "2px";
+    star.style.height = "2px";
+    star.style.background = "white";
+    star.style.boxShadow = "0 0 6px white";
+    star.style.transform = "rotate(45deg)";
+    star.style.zIndex = "0";
+    star.style.opacity = "0";
+
+    document.body.appendChild(star);
+
+    // Animate it manually using JS
+    star.animate([
+      { left: "-10%", top: "10%", opacity: 0 },
+      { left: "10%", top: "30%", opacity: 1, offset: 0.1 },
+      { left: "30%", top: "50%", opacity: 0.5, offset: 0.2 },
+      { left: "110%", top: "130%", opacity: 0 }
+    ], {
+      duration: 2000,
+      easing: "ease-in-out"
+    });
+
+    // Remove after animation completes
+    setTimeout(() => {
+      document.body.removeChild(star);
+    }, 2500);
+  }
+
+  // Trigger stars at random intervals
+  function triggerRandomStars() {
+    createShootingStar();
+    const delay = Math.random() * 8000 + 3000; // Between 3s and 11s
+    setTimeout(triggerRandomStars, delay);
+  }
+
+  // Start it
+  triggerRandomStars();
+</script>
+
+<script>
+  const starsContainer = document.querySelector(".stars");
+  const starCount = 30;
+
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement("div");
+    star.classList.add("twinkle");
+
+    // Random position
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.left = Math.random() * 100 + "vw";
+
+    // Random animation delay and duration
+    const delay = Math.random() * 5;
+    const duration = 2 + Math.random() * 3;
+    star.style.animation = `twinkle ${duration}s ${delay}s infinite ease-in-out alternate`;
+    const colors = ['#ffffff', '#cceeff', '#ffddee'];
+    star.style.background = colors[Math.floor(Math.random() * colors.length)];
+    const size = Math.random() * 1.5 + 1; // Between 1px and 2.5px
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    star.style.borderRadius = "0";  // make it a square
+    star.style.transform = "rotate(45deg)";
+
+
+
+
+    starsContainer.appendChild(star);
+  }
+</script>
+</body>
+</html>

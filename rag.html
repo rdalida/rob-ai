@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How RAG Works</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+
+  <!-- Shared site header -->
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; background: rgba(0, 0, 0, 0.4); position: relative; z-index: 10;">
+    <div class="logo">ROB AI</div>
+    <nav style="display: flex; align-items: center; gap: 2rem; margin-right: 2rem;">
+      <a href="index.html" style="color: white; text-decoration: none; font-size: 1rem;">Home</a>
+      <a href="about.html" style="color: white; text-decoration: none; font-size: 1rem;">About</a>
+      <div class="dropdown" style="position: relative;">
+        <a href="#" style="color: white; text-decoration: none; font-size: 1rem;">Resources ▾</a>
+        <div class="dropdown-content" style="display: none; position: absolute; top: 2rem; left: 0; background-color: rgba(0, 0, 0, 0.9); padding: 1rem; border-radius: 8px; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 100;">
+          <a href="rag.html" style="display: block; padding: 0.5rem 0; color: white; text-decoration: none; font-size: 0.95rem;">📊 RAG Demo</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <script>
+    // Enable dropdown toggle on hover
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+    dropdown.addEventListener('mouseenter', () => {
+      dropdownContent.style.display = 'block';
+    });
+
+    dropdown.addEventListener('mouseleave', () => {
+      dropdownContent.style.display = 'none';
+    });
+  </script>
+
+
+  <header>
+    <h1>🔍 Understanding RAG: Retrieval-Augmented Generation</h1>
+  </header>
+
+  <main>
+    <div id="slide-container"></div>
+  </main>
+
+  <div class="button-bar">
+    <button class="btn btn-prev" id="prevBtn">← Previous</button>
+    <button class="btn btn-next" id="nextBtn">Next →</button>
+    <button class="btn btn-toggle" id="toggleViz">Vector Space</button>
+  </div>
+
+
+  <div id="vectorPlotContainer">
+    <iframe src="assets/vector_plot.html"></iframe>
+  </div>
+
+
+
+  <footer>
+    <p>© 2025 RAG Demo | Presented by Rob</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="content/data.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

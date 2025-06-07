@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me - Rob AI</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d0d;
+      color: #f0f0f0;
+      line-height: 1.6;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      background: rgba(0, 0, 0, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-right: 2rem; /* 👈 Reduce or remove this */
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #F5BD02;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 2rem;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.2);  /* 👈 transparent background */
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      min-width: 150px;
+      box-shadow: none;                     /* 👈 removes drop shadow */
+      border: 1px solid rgba(255, 255, 255, 0.1); /* 👈 optional soft border */
+      backdrop-filter: blur(6px);           /* 👈 optional for modern glassy look */
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.5rem 0;
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .dropdown-content a:hover {
+      color: #F5BD02;
+      background-color: rgba(255, 255, 255, 0.05); /* optional soft highlight */
+    }
+
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 0 2rem;
+    }
+
+    .about-text {
+      flex: 1 1 500px;
+      padding-right: 2rem;
+    }
+
+    .about-text h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      text-transform: lowercase;
+      color: #F5BD02;
+    }
+
+    .about-text p.intro {
+      color: #ccc;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p.description {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-image {
+      flex: 1 1 300px;
+      text-align: center;
+    }
+
+    .about-image img {
+      max-width: 300px;
+      border-radius: 10px;
+    }
+
+    .gallery {
+      margin: 3rem auto;
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 1rem 2rem 2rem;
+      max-width: 1200px;
+    }
+
+    .gallery img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        flex-direction: column;
+      }
+
+      .about-text {
+        padding-right: 0;
+      }
+
+      .about-image img {
+        max-width: 200px;
+      }
+
+      nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">ROB AI</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+        <div class="dropdown">
+          <a href="#">Resources ▾</a>
+          <div class="dropdown-content">
+            <a href="rag.html">📊 RAG Demo</a>
+            <!-- Add more links here -->
+          </div> <!-- close dropdown-content -->
+        </div> <!-- close dropdown -->
+    </nav>
+  </header>
+
+  <div class="about-container">
+    <div class="about-text">
+      <h1>about.</h1>
+      <p class="intro">I'm a curious builder passionate about AI and intuitive software design.</p>
+      <p class="description">
+        Since [Year], I've explored turning complex data and language problems into simple, helpful tools.
+        This hub is a space to share what I'm learning and building. Outside of code, you'll likely find me
+        reading sci-fi, sketching ideas, or taking long walks with a podcast in my ears.
+      </p>
+    </div>
+    <div class="about-image">
+      <img src="assets/main-photo.png" alt="Your Photo Placeholder" />
+    </div>
+  </div>
+
+  <div class="gallery">
+    <img src="assets/photo1.png" alt="Gallery Placeholder 1" />
+    <img src="assets/photo2.png" alt="Gallery Placeholder 2" />
+    <img src="assets/photo3.png" alt="Gallery Placeholder 3" />
+    <img src="assets/photo4.png" alt="Gallery Placeholder 4" />
+    <img src="assets/photo5.png" alt="Gallery Placeholder 5" />
+    <img src="assets/photo6.png" alt="Gallery Placeholder 6" />
+  </div>
+
+</body>
+</html>
