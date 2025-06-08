@@ -127,13 +127,11 @@
     }
 
 
-    .hero {
-    position: relative;
+  .hero {
     max-width: 700px;
+    margin-top: 15rem;
+    margin-left: 9rem;
     padding: 2rem 3rem;
-    margin: 0; /* reset margin */
-    top: 10rem;
-    left: 6rem;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 12px;
     text-align: left;
@@ -155,11 +153,26 @@
 
   .hero-buttons {
     display: flex;
-    flex-direction: column; /* stack buttons on small screens by default */
+    flex-direction: column;
     gap: 1rem;
+    align-items: flex-start; /* ✅ add this */
   }
 
-  @media (min-width: 768px) {
+
+  .hero-buttons a {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 6px;
+    display: inline-block;
+
+    /* 👇 Make both buttons same size */
+    min-width: 200px;
+  }
+
+
+
+  @media (max-width: 768px) {
     .hero {
       margin: 4rem auto; /* center horizontally */
       padding: 2rem 1rem;
@@ -168,13 +181,12 @@
 
     .hero-buttons {
       flex-direction: column;
-    align-items: center;
+      align-items: center;
     }
 
     .hero-buttons a {
-      width: 100%;
-      max-width: 250px;
-      text-align: center;
+      width: auto;           /* ✅ only as wide as needed */
+      max-width: none;
     }
   }
 
