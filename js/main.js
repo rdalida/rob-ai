@@ -47,7 +47,7 @@ function renderSlide(index) {
 
       // ✅ Define original handler
       originalEditHandler = () => {
-        const currentText = pre.textContent || "";
+        const currentText = pre.innerHTML || "";
         const textarea = document.createElement("textarea");
         textarea.value = currentText;
         textarea.className = "card-editor";
@@ -60,13 +60,16 @@ function renderSlide(index) {
           const newText = textarea.value;
           slide.content = newText;
 
-          pre.textContent = newText;
+          pre.innerHTML = newText;
           card.replaceChild(pre, textarea);
 
           if (slide.animate === "tokenized") {
             animateCardText(newText);
             animateTokens(newText);
+          } else if (slide.animate === "reverse-token-flow") {
+            animateReverseTokenFlow(newText);
           }
+
 
           editBtn.textContent = "✏️ Edit";
           editBtn.onclick = originalEditHandler; // restore
@@ -88,6 +91,15 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
       card.appendChild(pre);
       content.appendChild(card);
 
+      if (slide.note) {
+        const note = document.createElement("div");
+        note.className = "slide-note";
+        note.textContent = slide.note;
+        note.innerHTML = slide.note;  // ← use innerHTML here
+        content.appendChild(note);
+      }
+
+
       const tokenStream = document.createElement("div");
       tokenStream.id = "tokens"; // 👈 must match your selector
       tokenStream.className = "token-stream";
@@ -103,16 +115,20 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
       cardFooter.appendChild(flipBtn);
       card.appendChild(cardFooter);
 
-      if (slide.animate === "tokenized"){
+      if (slide.animate === "tokenized") {
         animateCardText(slide.content);
         flipBtn.style.display = "block";
         setTimeout(() => {
           animateTokens(slide.content);
-        }, 100); // delay in ms after typewriter completes
-        } else {
-          pre.textContent = slide.content;
-          flipBtn.style.display = "none";
+        }, 100);
+      } else if (slide.animate === "reverse-token-flow") {
+        flipBtn.style.display = "none";
+        animateReverseTokenFlow(slide.content);
+      } else {
+        pre.innerHTML = slide.content;
+        flipBtn.style.display = "none";
       }
+
 
       flipBtn.addEventListener("click", () => {
       const tokenInners = document.querySelectorAll(".token-inner");
@@ -138,7 +154,7 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
 
       editBtn.onclick = () => {
         // Replace <pre> with <textarea>
-        const currentText = pre.textContent || "";
+        const currentText = pre.innerHTML || "";
         const textarea = document.createElement("textarea");
         textarea.value = currentText;
         textarea.className = "card-editor";
@@ -152,14 +168,17 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
           slide.content = newText;
 
           // Restore the <pre>
-          pre.textContent = newText;
+          pre.innerHTML = newText;
           card.replaceChild(pre, textarea);
 
           // Trigger animation
           if (slide.animate === "tokenized") {
             animateCardText(newText);
             animateTokens(newText);
+          } else if (slide.animate === "reverse-token-flow") {
+            animateReverseTokenFlow(newText);
           }
+
 
           // Reset the button
           editBtn.textContent = "✏️ Edit";
@@ -264,6 +283,48 @@ flipButton.onclick = () => {
   flipButton.textContent = flipped ? "Tokens" : "Token ID";
 };
 
+function animateReverseTokenFlow(text) {
+  console.log("✅ Running reverse token animation");
+  const tokenContainer = document.getElementById("tokens");
+  const pre = document.getElementById("animated-card");
+  if (!tokenContainer || !pre) return;
+
+  // Step 1: Create fake token IDs first
+  const tokens = text.split(/\s+/);
+  tokenContainer.innerHTML = tokens.map((t, i) => `
+    <div class="token-card">
+      <div class="token-inner">
+        <div class="token-front">ID: ${generateFakeTokenID(i)}</div>
+        <div class="token-back">${t}</div>
+      </div>
+    </div>
+  `).join("");
+
+  // Step 2: Animate token cards in
+  gsap.set(".token-card", { opacity: 0, y: 20, scale: 0.9 });
+
+  gsap.to(".token-card", {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    stagger: 0.12,
+    duration: 1,
+    delay: 0.5,
+    ease: "power2.out"
+  });
+
+  // Step 3: Flip all tokens after delay
+  setTimeout(() => {
+    document.querySelectorAll(".token-inner").forEach(el => {
+      el.style.transform = "rotateY(180deg)";
+    });
+  }, 2000);
+
+  // Step 4: Type final output after another delay
+  setTimeout(() => {
+    animateCardText(text); // reuse your existing typewriter effect
+  }, 3200);
+}
 
 
 

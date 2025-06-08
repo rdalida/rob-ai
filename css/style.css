@@ -381,3 +381,34 @@ main {
   border-radius: 6px;
   resize: vertical;
 }
+
+.slide-note {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  color: #ccc;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  padding: 0 1rem;
+}
+
+.highlight-gold {
+  color: #F5BD02;
+  font-weight: 600;
+  text-shadow: 0 0 4px #00f0ff66;
+}
+
+.highlight-cyan {
+  color: #00f0ff;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.95em;
+  color: #0ff;
+}
