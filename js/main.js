@@ -260,9 +260,6 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
         const note = document.createElement("p");
         note.textContent = slide.note;
         note.style.marginTop = "1rem";
-        note.style.fontSize = "0.9rem";
-        note.style.color = "#cccccc";
-        note.style.textAlign = "center";
         content.appendChild(note);
       }
 

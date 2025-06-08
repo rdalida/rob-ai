@@ -12,7 +12,7 @@ const slides = [
   },
   {
     type: "card",
-    title: "General ChatGPT Flow",
+    title: "֎ General ChatGPT Flow",
     animate: "tokenized",
     label: "User sends prompt",
     content: `What's the capital of France?`,
@@ -99,13 +99,13 @@ note: `
 
   {
     type: "image",
-    title: `Vectors and Databases`,
+    title: `📲 Vectors and Databases`,
     content: "assets/vector_no_background.png", // replace with your actual image path
   },
 
   {
     type: "text",
-    title: "Vector Embeddings",
+    title: "🔢 Vector Embeddings",
     content: `
     <p>Computers can't "understand" words like we do—they need numbers. That's where vector embeddings come in.</p>
 
@@ -125,15 +125,17 @@ note: `
 
 {
     type: "text",
-    title: "Vector Database",
+    title: "🛢️ Vector Database",
     content: `
     <p>A vector database is a special kind of database made for storing and searching vector embeddings.</p>
 
 <p>In a regular database, you search for exact matches. For example, you might look up a person by their exact name or ID. But with a vector database, you're not searching for exact matches—you’re searching for similar meanings.</p>
 
-<p>Let’s say you want to find documents that are similar in meaning to the sentence “How do I train a model?” A vector database takes the vector for that sentence and compares it with millions of other vectors to find the closest ones—like “How can I build an AI?” or “What steps are needed to teach a model?”</p>
+<p>Let’s say you want to find documents that are similar in meaning to the sentence <span class="highlight-gold"> “When did I submit a revenue report?”</span> A vector database takes the vector for that sentence and compares it with millions of other vectors with the closest relevant context.</p>
 
-<p>This is what makes vector databases powerful: They find related ideas, not just exact words. They’re essential for AI apps like search, chatbots, recommendation systems, and more—because they understand the meaning behind the text.</p>`
+<p>This is what makes vector databases powerful: They find related ideas, not just exact words. They’re essential for AI apps like search, chatbots, recommendation systems, and more—because they understand the meaning behind the text.</p>
+
+<p>In the next slide, we'll see a 3D representation of what happens when you query a Vector Database</p>`
 },
 
 
@@ -142,7 +144,7 @@ note: `
   title: "📈 5D Representation of Vector Space",
   src: "vector_plot.html",  // relative path to your HTML file
   height: "500px",          // optional
-  note: "This slide loads a custom HTML file inside an iframe.",
+  note: "The red diamond is our query and the graph shows where it lands in relation to other vectors.",
   height: "100vh" // takes 90% of viewport height
 }
 
