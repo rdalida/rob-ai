@@ -99,9 +99,29 @@ note: `
 
   {
     type: "image",
-    title: "Returned JSON from Action",
-    content: "assets/screenshot-action-json.png"
+    content: "assets/vector_no_background.png", // replace with your actual image path
   },
+
+  {
+    type: "text",
+    title: "Vector Embeddings",
+    content: `
+    <p>Computers can't "understand" words like we do—they need numbers. That's where vector embeddings come in.</p>
+
+    <p>A vector embedding is just a list of numbers that represents a word, sentence, or document.</p>
+    
+    <p>These numbers capture the meaning, context, and relationships between words, so that similar ideas end up with similar numbers.</p>
+
+    <p>🔢 [-0.05518227  0.01617802 -0.05773815  0.05592875 -0.00099338]...</p>
+
+    <p>For example, the sentence "I love cats" might turn into something like: 🔢 [0.8, 1.2, -0.5, 2.3, 0.7]. </p>
+
+    <p>This doesn't mean anything to us, but to the computer, it's a way to compare meanings. If another sentence like "I adore kittens" gets a similar set of numbers, the computer knows they're related.</p>
+
+    <p>In short: vector embeddings let computers understand text by turning meaning into math.**</p>`
+  },
+
+
 {
     type: "card",
     title: "🧪 New RAG Example",

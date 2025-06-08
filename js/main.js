@@ -233,6 +233,14 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
       img.alt = slide.title;
       img.className = "image-block";
       content.appendChild(img);
+
+      if (slide.note) {
+        const note = document.createElement("div");
+        note.className = "slide-note";
+        note.innerHTML = slide.note;
+        note.style.whiteSpace = "pre-line"; // enables \n and <br /> behavior
+        content.appendChild(note);
+      }
     }
 
     currentSlide = index;
