@@ -41,6 +41,62 @@ const slides = [
 `
   },
   {
+    type: "text",
+    title: "📚 How ChatGPT Was Trained",
+    content: `
+<p>Before ChatGPT could answer questions, it went through a process called <strong>pretraining</strong>.</p>
+
+<p>It was trained on a massive amount of public text from websites, books, articles, and more — basically anything written by humans that's available on the internet.</p>
+
+<p>During this training, the model <strong><em>wasn't</em></strong> told what the "correct" answer was. Instead, it learned to guess the next word in a sentence over and over again. Kind of like a giant autocomplete — but much smarter.</p>
+
+<p>By doing this billions of times, the model developed a strong sense of language patterns, grammar, facts, and even some reasoning skills.</p>
+`
+  },
+  {
+    type: "text",
+    title: "🔒 Why ChatGPT Doesn't Know Your Data",
+    content: `
+<p>ChatGPT was trained on public data available before its training cutoff. That means it doesn’t automatically know your private files, documents, or internal tools.</p>
+
+<p>It also can’t browse the internet or see new information unless it's built into its prompt.</p>
+
+<p>But there's a clever workaround: <span class="highlight-gold">RAG</span>, or <strong>Retrieval-Augmented Generation</strong>.</p>
+
+<p>With RAG, we can “teach” the model about your data by giving it access to external documents at the time of the question. These documents are retrieved, summarized, and added to the prompt — like giving the model a cheat sheet before it answers.</p>
+`
+  },
+  {
+  type: "card",
+  title: "📊 How RAG Works (High-Level Overview)",
+  label: "RAG Flow",
+  content: `
+<pre>
+<span class="highlight-blue">User</span> Prompt
+   ↓
+Retriever (vector DB <span class="highlight-blue">search</span>)
+   ↓
+Relevant documents
+   ↓
++ Original Prompt
+   ↓
+LLM ➝ <span class="highlight-blue">Final</span> Answer
+</pre>
+  `,
+  note: `
+    <p>This is a high-level view of how <span class="highlight-gold">Retrieval-Augmented Generation</span> works:</p>
+    <ul>
+      <li><strong>1. User Prompt:</strong> A question is asked.</li>
+      <li><strong>2. Retriever:</strong> Searches your data (in a vector database) to find relevant information.</li>
+      <li><strong>3. Context Assembly:</strong> The prompt and retrieved documents are combined.</li>
+      <li><strong>4. Generator (LLM):</strong> Uses this combined context to generate a complete answer.</li>
+    </ul>
+    <p>This allows ChatGPT to answer questions using <em>your own data</em> — without retraining the model.</p>
+  `
+},
+
+
+  {
     type: "image",
     title: "Returned JSON from Action",
     content: "assets/screenshot-action-json.png"
