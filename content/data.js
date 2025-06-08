@@ -99,6 +99,7 @@ note: `
 
   {
     type: "image",
+    title: `Vectors and Databases`,
     content: "assets/vector_no_background.png", // replace with your actual image path
   },
 
@@ -133,9 +134,17 @@ note: `
 <p>Let’s say you want to find documents that are similar in meaning to the sentence “How do I train a model?” A vector database takes the vector for that sentence and compares it with millions of other vectors to find the closest ones—like “How can I build an AI?” or “What steps are needed to teach a model?”</p>
 
 <p>This is what makes vector databases powerful: They find related ideas, not just exact words. They’re essential for AI apps like search, chatbots, recommendation systems, and more—because they understand the meaning behind the text.</p>`
+},
+
+
+{
+  type: "html",
+  title: "📈 Vector Graph",
+  src: "vector_plot.html",  // relative path to your HTML file
+  height: "500px",          // optional
+  note: "This slide loads a custom HTML file inside an iframe.",
+  height: "100vh" // takes 90% of viewport height
 }
-
-
 
 
 

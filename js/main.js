@@ -243,6 +243,26 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
       }
     }
 
+    if (slide.type === "html") {
+      const iframe = document.createElement("iframe");
+      iframe.src = slide.src;
+      iframe.className = "html-slide";
+      iframe.style.width = "100%";
+      iframe.style.height = slide.height || "600px";
+      iframe.style.border = "none";
+      iframe.style.borderRadius = "12px";
+      iframe.style.height = "calc(100vh - 160px)"; // adjust for nav/header
+      iframe.style.position = "relative";
+      iframe.style.width = "100vw";
+      iframe.style.margin = "0 calc(-50vw + 50%)"; // center hack
+
+
+
+      content.appendChild(iframe);
+    }
+
+
+
     currentSlide = index;
     prevBtn.disabled = currentSlide === 0;
     nextBtn.disabled = currentSlide === slides.length - 1;
@@ -412,15 +432,6 @@ window.onload = () => {
     const index = parseInt(e.target.value, 10);
     renderSlide(index);
   });
-
-  const toggleBtn = document.getElementById("toggleViz");
-  const vizContainer = document.getElementById("vectorPlotContainer");
-
-  toggleBtn.onclick = () => {
-    const isHidden = vizContainer.style.display === "none";
-    vizContainer.style.display = isHidden ? "block" : "none";
-    toggleBtn.textContent = isHidden ? "Hide Vector Space" : "Vector Space";
-  };
 
   renderSlide(currentSlide); // call last
 };

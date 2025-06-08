@@ -445,3 +445,9 @@ code {
   border: 1px solid #F5BD02;
   cursor: pointer;
 }
+
+.html-slide {
+  margin-top: 1rem;
+  border: none;
+  border-radius: 12px;
+}
