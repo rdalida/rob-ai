@@ -139,7 +139,7 @@ note: `
 
 {
   type: "html",
-  title: "📈 Vector Graph",
+  title: "📈 5D Representation of Vector Space",
   src: "vector_plot.html",  // relative path to your HTML file
   height: "500px",          // optional
   note: "This slide loads a custom HTML file inside an iframe.",

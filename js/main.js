@@ -256,6 +256,16 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
       iframe.style.width = "100vw";
       iframe.style.margin = "0 calc(-50vw + 50%)"; // center hack
 
+      if (slide.note) {
+        const note = document.createElement("p");
+        note.textContent = slide.note;
+        note.style.marginTop = "1rem";
+        note.style.fontSize = "0.9rem";
+        note.style.color = "#cccccc";
+        note.style.textAlign = "center";
+        content.appendChild(note);
+      }
+
 
 
       content.appendChild(iframe);
