@@ -25,6 +25,8 @@ function renderSlide(index) {
       const card = document.createElement("div");
       card.className = "card";
 
+      let originalEditHandler;
+
       const header = document.createElement("div");
       header.className = "card-header";
 
@@ -42,6 +44,37 @@ function renderSlide(index) {
       const editBtn = document.createElement("span");
       editBtn.textContent = "✏️ Edit";
       editBtn.style.cursor = "pointer";
+
+      // ✅ Define original handler
+      originalEditHandler = () => {
+        const currentText = pre.textContent || "";
+        const textarea = document.createElement("textarea");
+        textarea.value = currentText;
+        textarea.className = "card-editor";
+        textarea.rows = 4;
+        card.replaceChild(textarea, pre);
+
+        // Change Edit button to Save
+        editBtn.textContent = "💾 Save";
+        editBtn.onclick = () => {
+          const newText = textarea.value;
+          slide.content = newText;
+
+          pre.textContent = newText;
+          card.replaceChild(pre, textarea);
+
+          if (slide.animate === "tokenized") {
+            animateCardText(newText);
+            animateTokens(newText);
+          }
+
+          editBtn.textContent = "✏️ Edit";
+          editBtn.onclick = originalEditHandler; // restore
+        };
+      };
+
+editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
+
 
       actions.appendChild(copyBtn);
       actions.appendChild(editBtn);
@@ -63,7 +96,7 @@ function renderSlide(index) {
       const flipBtn = document.createElement("button");
       flipBtn.id = "flip-tokens-btn";
       flipBtn.className = "token-button";
-      flipBtn.textContent = "To Vectors";
+      flipBtn.textContent = "Token ID";
 
       const cardFooter = document.createElement("div");
       cardFooter.className = "card-footer";
@@ -90,7 +123,7 @@ function renderSlide(index) {
       });
 
       flipBtn.dataset.flipped = (!flipped).toString();
-      flipBtn.textContent = flipped ? "To Vectors" : "To Tokens";
+      flipBtn.textContent = flipped ? "Token ID" : "Tokens";
     });
 
       flipBtn.dataset.flipped = "false";
@@ -103,10 +136,37 @@ function renderSlide(index) {
         });
       };
 
-      // Edit placeholder
       editBtn.onclick = () => {
-        alert("Edit mode not implemented yet!");
+        // Replace <pre> with <textarea>
+        const currentText = pre.textContent || "";
+        const textarea = document.createElement("textarea");
+        textarea.value = currentText;
+        textarea.className = "card-editor";
+        textarea.rows = 4;
+        card.replaceChild(textarea, pre);
+
+        // Turn Edit into Save
+        editBtn.textContent = "💾 Save";
+        editBtn.onclick = () => {
+          const newText = textarea.value;
+          slide.content = newText;
+
+          // Restore the <pre>
+          pre.textContent = newText;
+          card.replaceChild(pre, textarea);
+
+          // Trigger animation
+          if (slide.animate === "tokenized") {
+            animateCardText(newText);
+            animateTokens(newText);
+          }
+
+          // Reset the button
+          editBtn.textContent = "✏️ Edit";
+          editBtn.onclick = originalEditHandler;
+        };
       };
+
 
     }
 
@@ -148,12 +208,10 @@ function animateCardText(text) {
   });
 }
 
-function generateVector() {
-  const nums = Array.from({ length: 2 }, () =>
-    (Math.random() * 2 - 1).toFixed(2)
-  );
-  return `${nums.join(", ")}`.slice(0, 11);
+function generateFakeTokenID() {
+  return Math.floor(Math.random() * 20000 + 10000); // range: 10000–29999
 }
+
 
 
 function animateTokens(text) {
@@ -168,7 +226,7 @@ function animateTokens(text) {
     <div class="token-card">
       <div class="token-inner">
         <div class="token-front">${token}</div>
-        <div class="token-back">[ ${generateVector()} ]</div>
+        <div class="token-back">ID: ${generateFakeTokenID()}</div>
       </div>
     </div>
   `).join("");
@@ -203,7 +261,7 @@ flipButton.onclick = () => {
   });
 
   flipped = !flipped; // toggle state
-  flipButton.textContent = flipped ? "To Tokens" : "To Vectors";
+  flipButton.textContent = flipped ? "Tokens" : "Token ID";
 };
 
 

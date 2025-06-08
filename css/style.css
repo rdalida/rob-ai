@@ -369,3 +369,15 @@ main {
   background: #08e;
   color: #fff;
 }
+
+.card-editor {
+  width: 100%;
+  background: #111;
+  color: #fff;
+  border: 1px solid #555;
+  font-family: monospace;
+  font-size: 0.95rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  resize: vertical;
+}
