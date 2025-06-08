@@ -247,6 +247,13 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
     prevBtn.disabled = currentSlide === 0;
     nextBtn.disabled = currentSlide === slides.length - 1;
 
+    // ✅ Keep dropdown in sync with current slide
+    const selector = document.getElementById("slide-selector");
+    if (selector) {
+      selector.value = index;
+    }
+
+
     // Step 3: fade back in
     content.classList.remove("fade-out");
   }, 400); // match the transition duration (400ms)
@@ -391,7 +398,21 @@ function animateReverseTokenFlow(text) {
 window.onload = () => {
   prevBtn.onclick = () => renderSlide(currentSlide - 1);
   nextBtn.onclick = () => renderSlide(currentSlide + 1);
-  renderSlide(currentSlide);
+
+  const selector = document.getElementById("slide-selector");
+
+  slides.forEach((slide, index) => {
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = `${index + 1}. ${slide.title || slide.type}`;
+    selector.appendChild(option);
+  });
+
+  selector.addEventListener("change", (e) => {
+    const index = parseInt(e.target.value, 10);
+    renderSlide(index);
+  });
+
   const toggleBtn = document.getElementById("toggleViz");
   const vizContainer = document.getElementById("vectorPlotContainer");
 
@@ -401,6 +422,7 @@ window.onload = () => {
     toggleBtn.textContent = isHidden ? "Hide Vector Space" : "Vector Space";
   };
 
-
+  renderSlide(currentSlide); // call last
 };
+
 

@@ -112,9 +112,9 @@ note: `
     
     <p>These numbers capture the meaning, context, and relationships between words, so that similar ideas end up with similar numbers.</p>
 
-    <p>🔢 [-0.05518227  0.01617802 -0.05773815  0.05592875 -0.00099338]...</p>
-
-    <p>For example, the sentence "I love cats" might turn into something like: 🔢 [0.8, 1.2, -0.5, 2.3, 0.7]. </p>
+    <p>For example, the sentence "I love cats" might turn into something like:
+    <br>🔢 [-0.05518227  0.01617802 -0.05773815  0.05592875 -0.00099338]... </br>
+    </p>
 
     <p>This doesn't mean anything to us, but to the computer, it's a way to compare meanings. If another sentence like "I adore kittens" gets a similar set of numbers, the computer knows they're related.</p>
 
@@ -123,14 +123,18 @@ note: `
 
 
 {
-    type: "card",
-    title: "🧪 New RAG Example",
-    content: `{
-  "input": "What vaccines are required?",
-  "retriever": "Queries embedding DB",
-  "generator": "Synthesizes answer with citation"
-}`
-  }
+    type: "text",
+    title: "Vector Database",
+    content: `
+    <p>A vector database is a special kind of database made for storing and searching vector embeddings.</p>
+
+<p>In a regular database, you search for exact matches. For example, you might look up a person by their exact name or ID. But with a vector database, you're not searching for exact matches—you’re searching for similar meanings.</p>
+
+<p>Let’s say you want to find documents that are similar in meaning to the sentence “How do I train a model?” A vector database takes the vector for that sentence and compares it with millions of other vectors to find the closest ones—like “How can I build an AI?” or “What steps are needed to teach a model?”</p>
+
+<p>This is what makes vector databases powerful: They find related ideas, not just exact words. They’re essential for AI apps like search, chatbots, recommendation systems, and more—because they understand the meaning behind the text.</p>`
+}
+
 
 
 

@@ -416,3 +416,32 @@ code {
   color: #3ecdf9;
   font-weight: 500;
 }
+
+
+.slide-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem auto;
+  flex-wrap: wrap;
+}
+
+.slide-selector {
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.token-button {
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  background-color: #222;
+  color: #F5BD02;
+  border: 1px solid #F5BD02;
+  cursor: pointer;
+}
