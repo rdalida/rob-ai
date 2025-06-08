@@ -254,3 +254,80 @@ main {
   from { opacity: 0.1; transform: scale(1); }
   to   { opacity: 1; transform: scale(1.8); }
 }
+
+.token-stream {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.token {
+  display: inline-block;
+  margin: 6px 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  background: #1f1f1f;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 6px;
+  font-family: monospace;
+  box-shadow: 0 0 6px rgba(245,189,2, 0.3); /* slight glow */
+  transform-origin: center;
+}
+
+.llm-box {
+  margin-top: 1.5rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  background: #333;
+  border: 1px solid #F5BD02;
+  border-radius: 8px;
+  display: inline-block;
+  color: #F5BD02;
+}
+
+.token-card {
+  display: inline-block;
+  perspective: 800px;
+  margin: 6px;
+}
+
+.token-inner {
+  width: 120px;
+  height: 40px;
+  text-align: center;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.5s ease-in-out;
+
+}
+
+.token-front,
+.token-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 40px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: monospace;
+  backface-visibility: hidden;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+  border: 1px solid #444;
+}
+
+.token-front {
+  background: #222;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(245, 189, 2, 0.5); /* yellowish glow */
+  border: 1px solid #F5BD02;
+}
+
+.token-back {
+  background: #1a1a1a;
+  color: #0ff;
+  transform: rotateY(180deg);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+  border: 1px solid #0ff;
+  color: #0ff;
+  background: #101010;
+}

@@ -30,7 +30,7 @@ function renderSlide(index) {
 
       const label = document.createElement("span");
       label.className = "card-label";
-      label.textContent = "text";
+      label.textContent = slide.label || "text";
 
       const actions = document.createElement("div");
       actions.className = "card-actions";
@@ -49,11 +49,27 @@ function renderSlide(index) {
       header.appendChild(actions);
 
       const pre = document.createElement("pre");
-      pre.textContent = slide.content;
+      pre.className = "card-content";
+      pre.id = "animated-card";
+      card.appendChild(header);
+      card.appendChild(pre);
+      content.appendChild(card);
+
+      const tokenStream = document.createElement("div");
+      tokenStream.id = "tokens"; // 👈 must match your selector
+      tokenStream.className = "token-stream";
+      card.appendChild(tokenStream);
+
+      animateCardText(slide.content);
+      setTimeout(() => {
+        animateTokens(slide.content);
+      }, 1000); // delay in ms after typewriter completes
+
+
 
       // Copy logic
       copyBtn.onclick = () => {
-        navigator.clipboard.writeText(pre.textContent).then(() => {
+        navigator.clipboard.writeText(slide.content).then(() => {
           copyBtn.textContent = "✅ Copied!";
           setTimeout(() => (copyBtn.textContent = "🔗 Copy"), 1500);
         });
@@ -64,9 +80,6 @@ function renderSlide(index) {
         alert("Edit mode not implemented yet!");
       };
 
-      card.appendChild(header);
-      card.appendChild(pre);
-      content.appendChild(card);
     }
 
     if (slide.type === "text") {
@@ -92,6 +105,76 @@ function renderSlide(index) {
     content.classList.remove("fade-out");
   }, 400); // match the transition duration (400ms)
 }
+
+function animateCardText(text) {
+  const el = document.getElementById("animated-card");
+  el.textContent = "";
+  gsap.to(el, {
+    text: text,
+    duration: text.length * 0.04,
+    ease: "none"
+  });
+}
+
+function generateVector() {
+  const nums = Array.from({ length: 2 }, () =>
+    (Math.random() * 2 - 1).toFixed(2)
+  );
+  return `${nums.join(", ")}`.slice(0, 11);
+}
+
+
+function animateTokens(text) {
+  const tokens = text
+  .split(/(\s+)/) // keep spaces as separate tokens
+  .filter(token => token.trim() !== ""); // remove empty or all-whitespace
+
+  const tokenContainer = document.getElementById("tokens");
+  if (!tokenContainer) return;
+
+  tokenContainer.innerHTML = tokens.map(token => `
+    <div class="token-card">
+      <div class="token-inner">
+        <div class="token-front">${token}</div>
+        <div class="token-back">[ ${generateVector()} ]</div>
+      </div>
+    </div>
+  `).join("");
+
+
+  gsap.set(".token-card", {
+    opacity: 0,
+    y: 20,
+    scale: 0.9
+  });
+
+  gsap.to(".token-card", {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    stagger: 0.12,         // 👈 slightly slower between tokens
+    delay: 2,              // 👈 wait after typewriter
+    duration: 1,         // 👈 smooth duration
+    ease: "power2.out"     // 👈 smoother than "back.out"
+  });
+
+  const numTokens = tokens.length;
+  const delayBeforeStart = 2; // seconds from GSAP
+  const stagger = 0.12;        // same as GSAP stagger
+  const buffer = 2;          // extra pause before flip
+  const totalDelay = (delayBeforeStart + (stagger * numTokens) + buffer) * 1000;
+
+  setTimeout(() => {
+    document.querySelectorAll(".token-inner").forEach(el => {
+      el.style.transform = "rotateY(180deg)";
+    });
+  }, totalDelay);
+
+
+
+  
+}
+
 
 
 

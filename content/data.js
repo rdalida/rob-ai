@@ -1,13 +1,9 @@
 const slides = [
   {
     type: "card",
-    title: "🔧 Defining a Function Call",
-    content: `{
-  "name": "searchConfluence",
-  "parameters": {
-    "query": "string"
-  }
-}`
+    title: "General ChatGPT Flow",
+    label: "User sends prompt",
+    content: `What's the capital of France?`
   },
   {
     type: "image",
