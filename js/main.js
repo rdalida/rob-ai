@@ -68,7 +68,13 @@ function renderSlide(index) {
             animateTokens(newText);
           } else if (slide.animate === "reverse-token-flow") {
             animateReverseTokenFlow(newText);
+          } else if (slide.animate === "typewriter") {
+            animateCardText(slide.content);
+
+
+            flipBtn.style.display = "none"; // hide if not needed
           }
+
 
 
           editBtn.textContent = "✏️ Edit";
@@ -87,9 +93,22 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
       const pre = document.createElement("pre");
       pre.className = "card-content";
       pre.id = "animated-card";
+      pre.textContent = stripHtml(slide.content); // Step 1: plain text first
       card.appendChild(header);
       card.appendChild(pre);
       content.appendChild(card);
+
+      // Step 2: typewriter animation on the plain string
+      gsap.to(pre, {
+        text: { value: stripHtml(slide.content) },
+        duration: 3,
+        ease: "none",
+        onComplete: () => {
+          // Step 3: swap in the full colored content
+          pre.innerHTML = slide.content;
+        }
+      });
+
 
       if (slide.note) {
         const note = document.createElement("div");
@@ -124,6 +143,11 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
       } else if (slide.animate === "reverse-token-flow") {
         flipBtn.style.display = "none";
         animateReverseTokenFlow(slide.content);
+      } else if (slide.animate === "typewriter") {
+        animateCardText(slide.content);
+
+
+        flipBtn.style.display = "none"; // hide if not needed
       } else {
         pre.innerHTML = slide.content;
         flipBtn.style.display = "none";
@@ -177,7 +201,14 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
             animateTokens(newText);
           } else if (slide.animate === "reverse-token-flow") {
             animateReverseTokenFlow(newText);
+          } else if (slide.animate === "typewriter") {
+            animateCardText(slide.content);
+
+
+            flipBtn.style.display = "none"; // hide if not needed
           }
+
+
 
 
           // Reset the button
@@ -192,7 +223,7 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
     if (slide.type === "text") {
       const block = document.createElement("div");
       block.className = "text-block";
-      block.innerHTML = marked.parse(slide.content);
+      block.innerHTML = slide.content;
       content.appendChild(block);
     }
 
@@ -217,20 +248,39 @@ editBtn.onclick = originalEditHandler; // ✅ SET initial behavior
 
 }
 
-function animateCardText(text) {
-  const el = document.getElementById("animated-card");
-  el.textContent = "";
-  gsap.to(el, {
-    text: text,
-    duration: text.length * 0.04,
-    ease: "none"
-  });
+function animateCardText(html) {
+  const target = document.getElementById("animated-card");
+  if (!target) return;
+
+  // Temporarily hold styled version
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const cleanText = doc.body.textContent || "";
+
+  target.textContent = ""; // Clear existing
+
+  let index = 0;
+  function type() {
+    if (index < cleanText.length) {
+      target.textContent += cleanText.charAt(index);
+      index++;
+      setTimeout(type, 15);
+    }
+  }
+
+  type();
 }
+
 
 function generateFakeTokenID() {
   return Math.floor(Math.random() * 20000 + 10000); // range: 10000–29999
 }
 
+function stripHtml(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
+}
 
 
 function animateTokens(text) {

@@ -70,29 +70,30 @@ const slides = [
   type: "card",
   title: "📊 How RAG Works (High-Level Overview)",
   label: "RAG Flow",
+  animate: "typewriter",
   content: `
-<pre>
 <span class="highlight-blue">User</span> Prompt
    ↓
 Retriever (vector DB <span class="highlight-blue">search</span>)
    ↓
-Relevant documents
-   ↓
-+ Original Prompt
+Relevant documents + Original Prompt
    ↓
 LLM ➝ <span class="highlight-blue">Final</span> Answer
-</pre>
-  `,
-  note: `
-    <p>This is a high-level view of how <span class="highlight-gold">Retrieval-Augmented Generation</span> works:</p>
-    <ul>
-      <li><strong>1. User Prompt:</strong> A question is asked.</li>
-      <li><strong>2. Retriever:</strong> Searches your data (in a vector database) to find relevant information.</li>
-      <li><strong>3. Context Assembly:</strong> The prompt and retrieved documents are combined.</li>
-      <li><strong>4. Generator (LLM):</strong> Uses this combined context to generate a complete answer.</li>
-    </ul>
-    <p>This allows ChatGPT to answer questions using <em>your own data</em> — without retraining the model.</p>
-  `
+`
+,
+note: `
+<p><span class="highlight-gold">Retrieval-Augmented Generation (RAG)</span> enhances an LLM by giving it access to your own data at runtime.</p>
+
+<p><strong>User Prompt:</strong> The user asks a question, like “What’s our refund policy?”</p>
+
+<p><strong>Retriever:</strong> That question is turned into a vector and compared (using <em>cosine similarity</em>) to your documents stored in a vector database. The most relevant chunks are pulled back.</p>
+
+<p><strong>Context Assembly:</strong> These relevant chunks are added to the original prompt, giving the LLM additional knowledge.</p>
+
+<p><strong>Generator (LLM):</strong> The model receives this enriched prompt and generates a helpful answer — now grounded in your data.</p>
+
+<p>This lets ChatGPT “look up” information without needing retraining — making it fast, flexible, and accurate for your needs.</p>
+`
 },
 
 
