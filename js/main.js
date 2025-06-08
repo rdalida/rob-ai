@@ -60,12 +60,40 @@ function renderSlide(index) {
       tokenStream.className = "token-stream";
       card.appendChild(tokenStream);
 
-      animateCardText(slide.content);
-      setTimeout(() => {
-        animateTokens(slide.content);
-      }, 1000); // delay in ms after typewriter completes
+      const flipBtn = document.createElement("button");
+      flipBtn.id = "flip-tokens-btn";
+      flipBtn.className = "token-button";
+      flipBtn.textContent = "To Vectors";
 
+      const cardFooter = document.createElement("div");
+      cardFooter.className = "card-footer";
+      cardFooter.appendChild(flipBtn);
+      card.appendChild(cardFooter);
 
+      if (slide.animate === "tokenized"){
+        animateCardText(slide.content);
+        flipBtn.style.display = "block";
+        setTimeout(() => {
+          animateTokens(slide.content);
+        }, 100); // delay in ms after typewriter completes
+        } else {
+          pre.textContent = slide.content;
+          flipBtn.style.display = "none";
+      }
+
+      flipBtn.addEventListener("click", () => {
+      const tokenInners = document.querySelectorAll(".token-inner");
+      const flipped = flipBtn.dataset.flipped === "true";
+
+      tokenInners.forEach(el => {
+        el.style.transform = flipped ? "rotateY(0deg)" : "rotateY(180deg)";
+      });
+
+      flipBtn.dataset.flipped = (!flipped).toString();
+      flipBtn.textContent = flipped ? "To Vectors" : "To Tokens";
+    });
+
+      flipBtn.dataset.flipped = "false";
 
       // Copy logic
       copyBtn.onclick = () => {
@@ -104,6 +132,10 @@ function renderSlide(index) {
     // Step 3: fade back in
     content.classList.remove("fade-out");
   }, 400); // match the transition duration (400ms)
+
+  document.getElementById("flip-tokens-btn").style.display = "none";
+
+
 }
 
 function animateCardText(text) {
@@ -156,24 +188,24 @@ function animateTokens(text) {
     delay: 2,              // 👈 wait after typewriter
     duration: 1,         // 👈 smooth duration
     ease: "power2.out"     // 👈 smoother than "back.out"
+  });  
+
+  document.getElementById("flip-tokens-btn").style.display = "block";
+}
+
+const flipButton = document.getElementById("flip-tokens-btn");
+
+let flipped = false; // track state
+
+flipButton.onclick = () => {
+  document.querySelectorAll(".token-inner").forEach(el => {
+    el.style.transform = flipped ? "rotateY(0deg)" : "rotateY(180deg)";
   });
 
-  const numTokens = tokens.length;
-  const delayBeforeStart = 2; // seconds from GSAP
-  const stagger = 0.12;        // same as GSAP stagger
-  const buffer = 2;          // extra pause before flip
-  const totalDelay = (delayBeforeStart + (stagger * numTokens) + buffer) * 1000;
+  flipped = !flipped; // toggle state
+  flipButton.textContent = flipped ? "To Tokens" : "To Vectors";
+};
 
-  setTimeout(() => {
-    document.querySelectorAll(".token-inner").forEach(el => {
-      el.style.transform = "rotateY(180deg)";
-    });
-  }, totalDelay);
-
-
-
-  
-}
 
 
 

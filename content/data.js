@@ -2,6 +2,7 @@ const slides = [
   {
     type: "card",
     title: "General ChatGPT Flow",
+    animate: "tokenized",
     label: "User sends prompt",
     content: `What's the capital of France?`
   },
