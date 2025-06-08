@@ -1,4 +1,15 @@
 const slides = [
+   {
+    type: "text",
+    title: "💡 Let's learn how LLMs work",
+    content: `
+<p>Welcome! In this walkthrough, we'll explore how <span class="highlight-gold">Large Language Models (LLMs)</span> like <strong>ChatGPT</strong> understand and generate text.</p>
+
+<p>We'll break down each step — from how your prompt is <em>tokenized</em>, to how the model predicts and builds responses <span style="color:#0ff;">one token at a time</span>.</p>
+
+<p>No AI background needed — just curiosity. <br/>Let's get started!</p>
+`
+  },
   {
     type: "card",
     title: "General ChatGPT Flow",
@@ -6,15 +17,13 @@ const slides = [
     label: "User sends prompt",
     content: `What's the capital of France?`,
     note: `
-<p>
-    Each <span class="highlight-gold"> token ID </span> maps to a learned subword unit that the LLM understands.
-</p>
-<p>
-    These aren't always full words — they might be whole words, <br /> word parts <code>capi</code> <code>tal</code>, or even punctuation.
-</p>
-<p>
-    These IDs are then passed on to the LLM to predict the next ID.
-</p>
+<p>When you ask ChatGPT something, you're giving it a <strong>prompt</strong>.</p>
+
+<p>Before the model can understand it, your words are broken down into smaller pieces called <span class="highlight-gold">tokens</span>. This process is called <em>tokenization</em>.</p>
+
+<p>Each token is converted into a unique number called a <span class="highlight-gold">token ID</span>. These aren't always full words — they might be whole words, parts of words like <code>capi</code> and <code>tal</code>, or even just punctuation.</p>
+
+<p>These token IDs are what the model actually sees. It uses them to predict what comes next — one token at a time.</p>
 `
   },
   {
@@ -24,25 +33,17 @@ const slides = [
     label: "ChatGPT sends back a response",
     content: `The capital of France is Paris.`,
     note: `
-<p />The LLM generates responses one token at a time. 
-<p />It looks at the prompt and previously generated tokens to predict the most likely next token.
-<p />This process repeats — one prediction at a time — until the model finishes the full output.
-`
+<p>Once the LLM understands your prompt, it starts generating a response — <strong>one token at a time</strong>.</p>
 
+<p>It looks at everything it's seen so far (your question and its own previous words), and predicts the <em>most likely next token</em>.</p>
+
+<p>Then it adds that token to the context, and repeats the process — again and again — until it decides the answer is complete.</p>
+`
   },
   {
     type: "image",
     title: "Returned JSON from Action",
     content: "assets/screenshot-action-json.png"
-  },
-  {
-    type: "text",
-    title: "🧠 What is a Vector Database?",
-    content: `
-A **vector database** stores and searches numerical representations of data (embeddings) to enable semantic search.
-
-In RAG, it allows the system to find relevant chunks of your documents before answering.
-    `
   },
 {
     type: "card",
