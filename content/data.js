@@ -5,7 +5,7 @@ const slides = [
     content: `
 <p>Welcome! In this walkthrough, we'll explore how <span class="highlight-gold">Large Language Models (LLMs)</span> like <strong>ChatGPT</strong> understand and generate text.</p>
 
-<p>We'll break down each step — from how your prompt is <em>tokenized</em>, to how the model predicts and builds responses <span style="color:#0ff;">one token at a time</span>.</p>
+<p>We'll break down each step — from how a prompt is <em>tokenized</em>, to how the model predicts and builds responses <span style="color:#0ff;">one token at a time</span>.</p>
 
 <p>No AI background needed — just curiosity. <br/>Let's get started!</p>
 `
@@ -17,9 +17,9 @@ const slides = [
     label: "User sends prompt",
     content: `What's the capital of France?`,
     note: `
-<p>When you ask ChatGPT something, you're giving it a <strong>prompt</strong>.</p>
+<p>When we ask ChatGPT something, we're giving it a <strong>prompt</strong>.</p>
 
-<p>Before the model can understand it, your words are broken down into smaller pieces called <span class="highlight-gold">tokens</span>. This process is called <em>tokenization</em>.</p>
+<p>Before the model can understand it, our words are broken down into smaller pieces called <span class="highlight-gold">tokens</span>. This process is called <em>tokenization</em>.</p>
 
 <p>Each token is converted into a unique number called a <span class="highlight-gold">token ID</span>. These aren't always full words — they might be whole words, parts of words like <code>capi</code> and <code>tal</code>, or even just punctuation.</p>
 
@@ -33,11 +33,14 @@ const slides = [
     label: "ChatGPT sends back a response",
     content: `The capital of France is Paris.`,
     note: `
-<p>Once the LLM understands your prompt, it starts generating a response — <strong>one token at a time</strong>.</p>
+<p>Once the LLM understands our prompt, it starts generating a response — <strong>one token at a time</strong>.</p>
 
-<p>It looks at everything it's seen so far (your question and its own previous words), and predicts the <em>most likely next token</em>.</p>
+<p>It looks at everything it's seen so far (our question and its own previous words), and predicts the <em>most likely next token</em>.</p>
 
-<p>Then it adds that token to the context, and repeats the process — again and again — until it decides the answer is complete.</p>
+<p>In this example, it predicted <span class="highlight-gold">Paris</span> as the next most likely token.</p>
+
+<p>It then adds that token to the context, and repeats the process — again and again — until it decides the answer is complete.</p>
+
 `
   },
   {
@@ -57,13 +60,13 @@ const slides = [
     type: "text",
     title: "🔒 Why ChatGPT Doesn't Know Your Data",
     content: `
-<p>ChatGPT was trained on public data available before its training cutoff. That means it doesn’t automatically know your private files, documents, or internal tools.</p>
+<p>ChatGPT was trained on public data available before its training cutoff. That means it doesn’t automatically know our private files, documents, or internal tools.</p>
 
 <p>It also can’t browse the internet or see new information unless it's built into its prompt.</p>
 
 <p>But there's a clever workaround: <span class="highlight-gold">RAG</span>, or <strong>Retrieval-Augmented Generation</strong>.</p>
 
-<p>With RAG, we can “teach” the model about your data by giving it access to external documents at the time of the question. These documents are retrieved, summarized, and added to the prompt — like giving the model a cheat sheet before it answers.</p>
+<p>With RAG, we can “teach” the model about our data by giving it access to external documents at the time of the question. These documents are retrieved, summarized, and added to the prompt — like giving the model a cheat sheet before it answers.</p>
 `
   },
   {
@@ -82,24 +85,24 @@ LLM ➝ <span class="highlight-blue">Final</span> Answer
 `
 ,
 note: `
-<p><span class="highlight-gold">Retrieval-Augmented Generation (RAG)</span> enhances an LLM by giving it access to your own data at runtime.</p>
+<p><span class="highlight-gold">Retrieval-Augmented Generation (RAG)</span> enhances an LLM by giving it access to our own data at runtime.</p>
 
-<p><strong>User Prompt:</strong> The user asks a question, like “What’s our refund policy?”</p>
+<p><strong>User Prompt:</strong> We ask a question, like “What’s our refund policy?”</p>
 
-<p><strong>Retriever:</strong> That question is turned into a vector and compared (using <em>cosine similarity</em>) to your documents stored in a vector database. The most relevant chunks are pulled back.</p>
+<p><strong>Retriever:</strong> That question is turned into a vector and compared (using <em>cosine similarity</em>) to our documents stored in a vector database. The most relevant chunks are pulled back.</p>
 
 <p><strong>Context Assembly:</strong> These relevant chunks are added to the original prompt, giving the LLM additional knowledge.</p>
 
-<p><strong>Generator (LLM):</strong> The model receives this enriched prompt and generates a helpful answer — now grounded in your data.</p>
+<p><strong>Generator (LLM):</strong> The model receives this enriched prompt and generates a helpful answer — now grounded in our data.</p>
 
-<p>This lets ChatGPT “look up” information without needing retraining — making it fast, flexible, and accurate for your needs.</p>
+<p>This lets ChatGPT “look up” information without needing retraining — making it fast, flexible, and accurate for our needs.</p>
 `
 },
 
 
   {
     type: "image",
-    title: `📲 Vectors and Databases`,
+    title: `⚛ Vectors and Databases`,
     content: "assets/vector_no_background.png", // replace with your actual image path
   },
 
@@ -129,9 +132,9 @@ note: `
     content: `
     <p>A vector database is a special kind of database made for storing and searching vector embeddings.</p>
 
-<p>In a regular database, you search for exact matches. For example, you might look up a person by their exact name or ID. But with a vector database, you're not searching for exact matches—you’re searching for similar meanings.</p>
+<p>In a regular database, we search for exact matches. For example, we might look up a person by their exact name or ID. But with a vector database, we're not searching for exact matches—we're searching for similar meanings.</p>
 
-<p>Let’s say you want to find documents that are similar in meaning to the sentence <span class="highlight-gold"> “When did I submit a revenue report?”</span> A vector database takes the vector for that sentence and compares it with millions of other vectors with the closest relevant context.</p>
+<p>Let’s say we want to find documents that are similar in meaning to the sentence <span class="highlight-gold"> “When did I submit a revenue report?”</span> A vector database takes the vector for that sentence and compares it with millions of other vectors to find the closest relevant context.</p>
 
 <p>This is what makes vector databases powerful: They find related ideas, not just exact words. They’re essential for AI apps like search, chatbots, recommendation systems, and more—because they understand the meaning behind the text.</p>
 
