@@ -640,3 +640,28 @@ header {
   position: relative;
   z-index: 1;
 }
+
+#snake-container-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+  align-items: flex-start;
+}
+
+#high-scores {
+  color: white;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+}
+
+#score-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+#score-list li {
+  margin-bottom: 0.5rem;
+}
