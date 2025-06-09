@@ -627,10 +627,14 @@ header {
 
 .snake-canvas {
   display: block;
-  margin: 100px auto 2rem auto; /* pushes it below fixed header */
-  border: 2px solid #000;
-  background-color: #000;
-  max-width: 100%;
+  background-color: #111;
+  border: 2px solid #333;
+}
+
+#snake-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .snake-info {
@@ -641,14 +645,15 @@ header {
   z-index: 1;
 }
 
-#snake-container-wrapper {
+#snake-wrapper {
   display: flex;
   justify-content: center;
+  align-items: flex-start; /* align canvas and scores at the top */
   gap: 2rem;
-  margin: 2rem auto;
-  max-width: 1000px;
-  align-items: flex-start;
+  margin-top: 2rem;
+  flex-wrap: wrap; /* optional: wrap on smaller screens */
 }
+
 
 #high-scores {
   color: white;
@@ -664,4 +669,52 @@ header {
 
 #score-list li {
   margin-bottom: 0.5rem;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #111;
+  border: 2px solid #555;
+  padding: 2rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+}
+
+.modal-content input {
+  margin-top: 1rem;
+  padding: 0.3rem;
+  font-family: monospace;
+  font-size: 14px;
+  width: 80%;
+  background: #000;
+  border: 1px solid #888;
+  color: #0f0;
+}
+
+.modal-content button {
+  margin-top: 1rem;
+  padding: 0.4rem 1rem;
+  font-family: monospace;
+  cursor: pointer;
+  background-color: #222;
+  border: 1px solid #666;
+  color: #ff0;
+}
+
+.modal-content button:hover {
+  background-color: #333;
 }

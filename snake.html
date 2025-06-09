@@ -23,21 +23,19 @@
 		</div>
 	</nav>
 	</header>
-	<div class="snake-info">
-		<div class="title">🐍 SNAKE</div>
-		<br></br>
-		<p class="instructions">Use arrow keys to move.</p>
+
+	<div class="pong-info">
+		<div class="title">🏓 PONG</div>
+		<p class="instructions">Use ↑ and ↓ to move your paddle.</p>
 	</div>
-<div id="snake-container-wrapper">
-  <div id="snake-container"></div>
+	<div id="snake-wrapper">
+	<div id="snake-container"></div>
 
-  <div id="high-scores">
-    <h3>🏆 High Scores</h3>
-    <ol id="score-list"></ol>
-  </div>
-</div>
-
-
+	<div id="high-scores">
+		<h3>🏆 High Scores</h3>
+		<ol id="score-list"></ol>
+	</div>
+	</div>
 
 
 <script>
@@ -50,6 +48,9 @@ var LEFT=0, UP=1, RIGHT=2, DOWN=3;
 var KEY_LEFT=37, KEY_UP=38, KEY_RIGHT=39, KEY_DOWN=40;
 
 var snd = new Audio ("Snake.wav");
+
+let paused = false;
+
 
 var grid = {
 	width: null,
@@ -151,30 +152,60 @@ function init() {
 }
 
 function endGame() {
-  const name = prompt("Game over! Enter your name:");
+  paused = true; // Pause game updates
 
-  if (name) {
-    const newScore = { name: name, score: score };
-    let scores = JSON.parse(localStorage.getItem("snakeHighScores")) || [];
-    scores.push(newScore);
-    scores.sort((a, b) => b.score - a.score);
-    scores = scores.slice(0, 10);
-    localStorage.setItem("snakeHighScores", JSON.stringify(scores));
-  }
+  document.getElementById("name-modal").style.display = "flex";
+  const input = document.getElementById("player-name");
+  input.value = "";
+  input.focus();
 
-  drawHighScores();
-  init();              // reset game state
-  loop();              // ⬅️ restart the animation loop
+  document.getElementById("submit-name").onclick = () => {
+	const name = input.value.trim();
+
+	if (!name) {
+		// User left name empty: close modal, restart game, skip saving
+		document.getElementById("name-modal").style.display = "none";
+		paused = false;
+		init();
+		return;
+	}
+
+	// Save and display score
+	const newScore = { name, score };
+	let scores = JSON.parse(localStorage.getItem("snakeHighScores")) || [];
+	scores.push(newScore);
+	scores.sort((a, b) => b.score - a.score);
+	scores = scores.slice(0, 10);
+	localStorage.setItem("snakeHighScores", JSON.stringify(scores));
+	drawHighScores();
+
+	document.getElementById("name-modal").style.display = "none";
+	paused = false;
+	init();
+	};
 }
 
+function drawHighScores() {
+  const scores = JSON.parse(localStorage.getItem("snakeHighScores")) || [];
+  const list = document.getElementById("score-list");
+  list.innerHTML = "";
+
+  scores.forEach(entry => {
+    const li = document.createElement("li");
+    li.textContent = `${entry.name}: ${entry.score}`;
+    list.appendChild(li);
+  });
+}
 
 
 function loop() {
-	update();
-	draw();
-
-	window.requestAnimationFrame(loop, canvas);
+  if (!paused) {
+    update();
+    draw();
+  }
+  requestAnimationFrame(loop);
 }
+
 
 function update() {
 	frames++;
@@ -259,5 +290,16 @@ function draw() {
 main();
 drawHighScores();
 </script>
+
+<div id="name-modal" class="modal">
+  <div class="modal-content">
+    <h2>Game Over!</h2>
+    <label for="player-name">Enter your name:</label>
+    <input type="text" id="player-name" />
+    <button id="submit-name">OK</button>
+  </div>
+</div>
+
+
 </body>
 </html>
