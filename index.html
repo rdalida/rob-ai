@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rob AI</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -22,138 +23,7 @@
       min-height: 100vh;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 3rem;
-      background: rgba(0, 0, 0, 0.4);
-      position: relative;
-      z-index: 10;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #ebeae8;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      margin-right: 2rem; /* 👈 Reduce or remove this */
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      position: relative;
-      transition: color 0.2s ease;
-    }
-
-    nav a:hover {
-      color: #F5BD02;
-    }
-
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropdown > a {
-      padding: 0.5rem 1rem;
-      display: inline-block;
-    }
-
-    .dropdown a {
-      z-index: 2;
-      position: relative;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      pointer-events: auto;
-      z-index: 1;
-      top: 100%;
-      margin-top: 0.25rem;
-      left: 0;
-      background-color: #1a1a1a;  /* 👈 transparent background */
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1); /* 👈 optional soft border */
-      backdrop-filter: blur(6px);           /* 👈 optional for modern glassy look */
-      margin-top: 0;
-      pointer-events: auto;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      display: block;
-      visibility: hidden;
-    }
-
-    .dropdown:hover .dropdown-content {
-      opacity: 1;
-      transform: translateY(0);
-      visibility: visible;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 0.5rem 0;
-      color: white;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-
-    .dropdown-content a:hover {
-      color: #F5BD02;
-      background-color: rgba(255, 255, 255, 0.05); /* optional soft highlight */
-    }
-
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1rem;
-      }
-
-      nav {
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-        margin-right: 0;
-        margin-top: 1rem;
-      }
-
-      nav a {
-        font-size: 1.1rem;
-        padding: 0.25rem 0;
-      }
-
-      .dropdown-content {
-        position: static; /* no absolute on mobile */
-        border: none;
-        box-shadow: none;
-        background: none;
-        padding: 0;
-      }
-
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-    }
-
-
+    
   .hero {
     max-width: 700px;
     margin-top: 15rem;
@@ -254,8 +124,9 @@
       <div class="dropdown">
         <a href="#">Resources ▾</a>
         <div class="dropdown-content">
-          <a href="rag.html">📊 RAG Demo</a>
-          <!-- Add more links here -->
+          <a href="rag.html">⚛ RAG Demo</a>
+          <a href="pong.html">🏓 Pong Game</a>
+          <a href="snake.html">🐍 Snake Game</a>
         </div>
       </div>
     </nav>
@@ -263,7 +134,7 @@
 
   <div class="hero">
     <h1>Welcome!</h1>
-    <h2>This site was made entirely with ֎🇦🇮</h2>
+    <h2>This site was made mostly with ֎🇦🇮...mostly</h2>
     <p></p>
     <p>Explore practical tools, walkthroughs, and interactive demos to master AI fundamentals and applied use cases.</p>
     <div class="hero-buttons">

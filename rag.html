@@ -12,21 +12,22 @@
 </head>
 <body>
 
-
   <!-- Shared site header -->
-  <header style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; background: rgba(0, 0, 0, 0.4); position: relative; z-index: 10;">
+  <header>
     <div class="logo">ROB AI</div>
-    <nav style="display: flex; align-items: center; gap: 2rem; margin-right: 2rem;">
-      <a href="index.html" style="color: white; text-decoration: none; font-size: 1rem;">Home</a>
-      <a href="about.html" style="color: white; text-decoration: none; font-size: 1rem;">About</a>
-      <div class="dropdown" style="position: relative;">
-        <a href="#" style="color: white; text-decoration: none; font-size: 1rem;">Resources ▾</a>
-        <div class="dropdown-content" style="display: none; position: absolute; top: 2rem; left: 0; background-color: rgba(0, 0, 0, 0.9); padding: 1rem; border-radius: 8px; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 100;">
-          <a href="rag.html" style="display: block; padding: 0.5rem 0; color: white; text-decoration: none; font-size: 0.95rem;">📊 RAG Demo</a>
-        </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <div class="dropdown">
+      <a href="#">Resources ▾</a>
+      <div class="dropdown-content">
+        <a href="rag.html">📊 RAG Demo</a>
+        <a href="pong.html">🏓 Pong Game</a>
+        <a href="snake.html">🐍 Snake Game</a>
+      </div>
       </div>
     </nav>
-  </header>
+	</header>
 
   <script>
     // Enable dropdown toggle on hover
@@ -41,11 +42,6 @@
       dropdownContent.style.display = 'none';
     });
   </script>
-
-
-  <header>
-    <h1>🔍 Understanding RAG: Retrieval-Augmented Generation</h1>
-  </header>
 
   <!-- Optional: Wrap these controls in a nav or utility bar -->
   <div class="slide-controls">
@@ -65,11 +61,6 @@
     <button class="btn btn-prev" id="prevBtn">← Previous</button>
     <button class="btn btn-next" id="nextBtn">Next →</button>
   </div>
-
-
-  <footer>
-    <p>© 2025 RAG | Presented by Rob</p>
-  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="content/data.js"></script>
