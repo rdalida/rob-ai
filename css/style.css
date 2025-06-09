@@ -3,6 +3,7 @@ body {
   font-family: 'Outfit', sans-serif;
   background-color: #0d0d0d;
   color: #fff;
+
 }
 
 header {
@@ -375,16 +376,27 @@ main {
 
 .slide-note {
   margin-top: 2rem;
-  font-size: 1.1rem;
-  color: #ccc;
+  font-size: 1rem;
   text-align: left;
-  max-width: 700px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.6;
+  line-height: 1.7;
   padding: 0 1rem;
-  
+  border-left: 4px solid #0ff; /* cyan glow accent */
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #eee;
+  margin: 2rem auto 0 auto;
 }
+
+.slide-note p {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  color: #ddd;
+}
+
 
 .highlight-gold {
   color: #F5BD02;
@@ -771,4 +783,48 @@ header {
 }
 
 
+.text-block {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  text-align: left;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+}
+
+.text-block h1,
+.text-block h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.text-block p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  color: #cccccc;
+}
+
+.text-block strong {
+  color: #00ffff;
+}
+
+.text-block em {
+  font-style: italic;
+  color: #f5bd02;
+}
+
+.text-block ul,
+.text-block ol {
+  text-align: left;
+  margin: 1rem auto;
+  max-width: 600px;
+  padding-left: 1.5rem;
+}
+
+.text-block li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
 

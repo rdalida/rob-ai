@@ -3,6 +3,7 @@ const slides = [
     type: "text",
     title: "💡 Let's learn how LLMs work",
     content: `
+
 <p>Welcome! In this walkthrough, we'll explore how <span class="highlight-gold">Large Language Models (LLMs)</span> like <strong>ChatGPT</strong> understand and generate text.</p>
 
 <p>We'll break down each step — from how a prompt is <em>tokenized</em>, to how the model predicts and builds responses <span style="color:#0ff;">one token at a time</span>.</p>
