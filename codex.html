@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatGPT Codex</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- Favicon base -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+
+  <!-- Apple devices -->
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+
+  <!-- Android / PWA -->
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
+</head>
+<body>
+  <header>
+    <div class="logo">ROB AI</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <div class="dropdown">
+        <a href="#">Resources ▾</a>
+        <div class="dropdown-content">
+          <a href="rag.html">📊 RAG Demo</a>
+          <a href="pong.html">🏓 Pong Game</a>
+          <a href="snake.html">🐍 Snake Game</a>
+          <a href="codex.html">🤖 Codex</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="text-block">
+    <h1>ChatGPT Codex</h1>
+
+    <h2>What is it?</h2>
+    <p>ChatGPT Codex is an assistant that turns plain language tasks into working pull requests. It analyzes your repository, creates changes, then summarizes them for review.</p>
+
+    <h2>Setup</h2>
+    <ol>
+      <li>Clone the repository you want Codex to modify.</li>
+      <li>Create and export your API key as <code>OPENAI_API_KEY</code>.</li>
+      <li>Run the Codex command inside the project directory.</li>
+    </ol>
+
+    <h2>Usage</h2>
+    <p>Describe your desired changes. Codex writes the code, commits it, and reports test results so you can merge with confidence.</p>
+  </div>
+</body>
+</html>
