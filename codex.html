@@ -5,6 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ChatGPT Codex</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .lightbox-overlay.active {
+      display: flex;
+    }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border: 4px solid #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 24px #000;
+      background: #fff;
+    }
+    .lightbox-overlay .close-btn {
+      position: absolute;
+      top: 32px;
+      right: 48px;
+      font-size: 2.5rem;
+      color: #fff;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      z-index: 10000;
+    }
+    .codex-image { margin-bottom: 2em; }
+    .codex-image img { cursor: zoom-in; transition: box-shadow 0.2s; }
+    .codex-image img:hover { box-shadow: 0 0 16px #888; }
+    .caption { text-align: center; color: #555; font-size: 0.95em; margin-top: 0.5em; }
+  </style>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
   <!-- Favicon base -->
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
@@ -40,18 +76,80 @@
   <div class="text-block">
     <h1>ChatGPT Codex</h1>
 
-    <h2>What is it?</h2>
-    <p>ChatGPT Codex is an assistant that turns plain language tasks into working pull requests. It analyzes your repository, creates changes, then summarizes them for review.</p>
+    <h2>What is ChatGPT Codex?</h2>
+    <p><strong>ChatGPT Codex</strong> is like having a smart coding assistant that helps you write and change code using plain English. Instead of doing everything by hand, you can just tell Codex what you want, and it will do the hard work for you!</p>
+    <ul>
+      <li>Turn your ideas or instructions into real code changes.</li>
+      <li>Works with your own code projects (repositories).</li>
+      <li>Makes coding easier, especially if you’re new to programming or Git.</li>
+    </ul>
 
-    <h2>Setup</h2>
+    <h2>How does it work?</h2>
     <ol>
-      <li>Clone the repository you want Codex to modify.</li>
-      <li>Create and export your API key as <code>OPENAI_API_KEY</code>.</li>
-      <li>Run the Codex command inside the project directory.</li>
+      <li><strong>Tell Codex what you want:</strong> For example, “Add a button to the homepage” or “Fix the spelling mistake in the About page.”</li>
+      <li><strong>Codex writes the code:</strong> It understands your request and makes the changes for you.</li>
+      <li><strong>Review and merge:</strong> Codex shows you what it changed, so you can check and accept the updates.</li>
     </ol>
+    <div class="codex-image">
+      <img src="assets/codex-diff.png" alt="Codex commit diff example" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+      <div class="caption">Example: Codex shows you what changed before you accept it.</div>
+    </div>
 
-    <h2>Usage</h2>
-    <p>Describe your desired changes. Codex writes the code, commits it, and reports test results so you can merge with confidence.</p>
+    <h2>Getting Started (Setup)</h2>
+    <ol>
+      <li>Clone (download) the code project you want Codex to help with.</li>
+      <li>Get your OpenAI API key and set it as <code>OPENAI_API_KEY</code> (this lets Codex talk to ChatGPT).</li>
+      <li>Open a terminal (command prompt) in your project folder.</li>
+      <li>Run the Codex command to start using it.</li>
+    </ol>
+    <div class="codex-image">
+      <img src="assets/codex-environment.png" alt="Setting up Codex environment" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+      <div class="caption">Setting up your environment for Codex.</div>
+    </div>
+
+    <h2>How to Use Codex</h2>
+    <ol>
+      <li>Describe your change in plain English. Example: “Change the background color to blue.”</li>
+      <li>Codex will write the code, make a commit (save the change), and show you what it did.</li>
+      <li>You can test the change and merge it if you’re happy with it.</li>
+    </ol>
+    <div class="codex-image">
+      <img src="assets/codex-tasks.png" alt="Creating tasks with Codex" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+      <div class="caption">Creating tasks with Codex is as easy as describing what you want.</div>
+    </div>
+
+    <h2>Frequently Asked Questions</h2>
+    <ul>
+      <li><strong>Do I need to know how to code?</strong> No! Codex is designed to help beginners. Just describe what you want in simple language.</li>
+      <li><strong>What is a repository?</strong> It’s just a folder where your code lives. Codex works with these folders to make changes.</li>
+      <li><strong>What if I make a mistake?</strong> Codex shows you all changes before you accept them, so you can always review and undo if needed.</li>
+    </ul>
+
+    <h2>Need More Help?</h2>
+    <p>If you get stuck, check the documentation or ask for help! Codex is here to make coding easier for everyone.</p>
   </div>
+
+  <div id="lightbox" class="lightbox-overlay">
+    <span class="close-btn" id="lightbox-close">&times;</span>
+    <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged image" />
+  </div>
+
+  <script>
+    document.querySelectorAll('.codex-image img').forEach(img => {
+      img.addEventListener('click', function() {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = this.src;
+        lightboxImg.alt = this.alt;
+        lightbox.classList.add('active');
+      });
+    });
+    document.getElementById('lightbox-close').onclick = function() {
+      document.getElementById('lightbox').classList.remove('active');
+    };
+    document.getElementById('lightbox').onclick = function(e) {
+      if (e.target === this) this.classList.remove('active');
+    };
+  </script>
 </body>
 </html>
