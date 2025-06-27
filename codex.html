@@ -80,7 +80,7 @@
     <p><strong>ChatGPT Codex</strong> is like having a smart coding assistant that helps you write and change code using plain English. Instead of doing everything by hand, you can just tell Codex what you want, and it will do the hard work for you!</p>
     <ul>
       <li>Turn your ideas or instructions into real code changes.</li>
-      <li>Works with your own code projects (repositories).</li>
+      <li>Automating repetitive tasks.</li>
       <li>Makes coding easier, especially if you’re new to programming or Git.</li>
     </ul>
 
@@ -97,25 +97,60 @@
 
     <h2>Getting Started (Setup)</h2>
     <ol>
-      <li>Clone (download) the code project you want Codex to help with.</li>
-      <li>Get your OpenAI API key and set it as <code>OPENAI_API_KEY</code> (this lets Codex talk to ChatGPT).</li>
-      <li>Open a terminal (command prompt) in your project folder.</li>
-      <li>Run the Codex command to start using it.</li>
+      <li>
+        In ChatGPT, look for the Codex link in the sidebar or menu. Click it to open Codex.
+        <div class="codex-image">
+          <img src="assets/codex-link.png" alt="Finding Codex in ChatGPT" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+          <div class="caption">Step 1: Find and click the Codex link in ChatGPT.</div>
+        </div>
+      </li>
+      <li>
+        When you click the Codex link, you’ll see the Codex start screen.
+        <div class="codex-image">
+          <img src="assets/codex-start.png" alt="Codex start screen" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+          <div class="caption">Step 2: The Codex start screen will appear.</div>
+        </div>
+      </li>
+      <li>
+        Connect your GitHub account to Codex so it can help you with your code projects.
+        <div class="codex-image">
+          <img src="assets/codex-github.png" alt="Connect GitHub to Codex" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+          <div class="caption">Step 3: Connect your GitHub account to Codex.</div>
+        </div>
+      </li>
+      <li>
+        Set up your environment as shown below. <br>
+        <span style="display:block;margin:0.5em 0 0.5em 0;">
+          This step is just like what any new developer does when starting to work on a project. Here, you can install any software or libraries your project needs (called dependencies), add your API keys, and make sure everything is ready for Codex to help you. Think of it as preparing your workspace so you can start building and testing your code.
+        </span>
+        <div class="codex-image">
+          <img src="assets/codex-environment.png" alt="Setting up Codex environment" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+          <div class="caption">Step 4: Set up your environment for Codex.</div>
+        </div>
+      </li>
+      <li>
+        After your environment is set up, Codex will use it to run, test, and make changes to your code when you assign tasks. You’ll see some suggested tasks to help you get started, like running the project, installing dependencies, or checking the code.
+        <div class="codex-image">
+          <img src="assets/codex-ready.png" alt="Codex ready with initial tasks" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
+          <div class="caption">Step 5: Codex suggests some first tasks you can try in your new environment.</div>
+        </div>
+      </li>
     </ol>
-    <div class="codex-image">
-      <img src="assets/codex-environment.png" alt="Setting up Codex environment" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
-      <div class="caption">Setting up your environment for Codex.</div>
-    </div>
 
-    <h2>How to Use Codex</h2>
+    <h2>Best Practices for Using Codex</h2>
     <ol>
-      <li>Describe your change in plain English. Example: “Change the background color to blue.”</li>
-      <li>Codex will write the code, make a commit (save the change), and show you what it did.</li>
-      <li>You can test the change and merge it if you’re happy with it.</li>
+      <li><strong>Describe the task clearly.</strong> Write your request like you would when creating a JIRA ticket for a developer. Be specific about what you want changed or added.</li>
+      <li><strong>Include the business requirement.</strong> Explain why you need this change. This helps Codex understand the bigger picture.</li>
+      <li><strong>State the desired outcome.</strong> Describe what you expect to see after the change is made.</li>
+      <li><strong>List acceptance criteria.</strong> Provide clear conditions that must be met for the task to be considered complete.</li>
+      <li><strong>Break down large tasks.</strong> If your request is complex, split it into smaller, manageable steps. This makes it easier for Codex to help you and for you to review the changes.</li>
+      <li><strong>Review changes before merging.</strong> Always check what Codex has changed before accepting and merging the update.</li>
+      <li><strong>Test your project after changes.</strong> Run your project and make sure everything works as expected after Codex makes a change.</li>
+      <li><strong>Ask for help if needed.</strong> If you’re unsure how to describe a task, ask for examples or look at sample requests.</li>
     </ol>
     <div class="codex-image">
       <img src="assets/codex-tasks.png" alt="Creating tasks with Codex" style="max-width:100%;border:1px solid #ccc;box-shadow:2px 2px 8px #eee;">
-      <div class="caption">Creating tasks with Codex is as easy as describing what you want.</div>
+      <div class="caption">Tip: The more clearly you describe your task, the better Codex can help!</div>
     </div>
 
     <h2>Frequently Asked Questions</h2>
