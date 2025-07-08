@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Last 30 days in School Health Medicaid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #181A20;
+      color: #fff;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    .timeline {
+      margin-top: 2rem;
+      border-left: 2px solid #23262F;
+      padding-left: 0;
+    }
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      border-bottom: 1px solid #23262F;
+      position: relative;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .timeline-item:last-child {
+      border-bottom: none;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -11px;
+      top: 1.2rem;
+      width: 10px;
+      height: 10px;
+      background: #23262F;
+      border-radius: 50%;
+      border: 2px solid #23262F;
+    }
+    .timeline-date {
+      color: #7A7F9A;
+      font-size: 0.95rem;
+      min-width: 70px;
+      margin-right: 2rem;
+      font-weight: 600;
+    }
+    .timeline-title {
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: #fff;
+      margin: 0;
+    }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+    .filter-bar label {
+      font-size: 1rem;
+      color: #bbb;
+    }
+    .filter-bar input {
+      background: #23262F;
+      border: none;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+    }
+    .see-all {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+      float: right;
+      margin-top: -2.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .see-all:hover {
+      color: #F5BD02;
+    }
+    .timeline-item .timeline-tooltip {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 100%;
+      margin-top: 12px;
+      background: #23262F;
+      color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+      padding: 1rem 1.2rem;
+      min-width: 320px;
+      z-index: 10;
+      font-size: 0.98rem;
+      white-space: normal;
+    }
+    .timeline-item:hover .timeline-tooltip {
+      display: block;
+    }
+    .tags {
+      margin-bottom: 0.5em;
+    }
+    .tag {
+      display: inline-block;
+      background: #2d3748;
+      color: #F5BD02;
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-size: 0.85em;
+      margin-right: 5px;
+      margin-bottom: 2px;
+    }
+    .tooltip-desc {
+      color: #eee;
+      font-size: 0.97em;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem 0.2rem; }
+      .timeline-date { margin-right: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>Last 30 days in School Health Medicaid</h3>
+    <div class="filter-bar">
+      <label for="filter">Filter titles:</label>
+      <input id="filter" type="text" placeholder="Type to filter..." />
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-item">
+        <span class="timeline-date">Jul 07</span>
+        <span class="timeline-title"><a href="news/digest_20250708.html" style="color:inherit;text-decoration:underline;">Major Changes in School Health Medicaid Policies</a></span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            <span class="tag">funding</span><span class="tag">medicaid</span><span class="tag">state-news</span><span class="tag">special-education</span>
+          </div>
+          <div class="tooltip-desc">
+            Significant events include rural hospital closures due to low Medicaid reimbursement rates, the largest Medicaid cuts in history threatening disability services, and the uncertainty created by Education Department layoffs. Notably, a federal tax credit scholarship program was passed, and the Supreme Court is set to rule on transgender athlete rights. Meanwhile, the role of local organizations and diversification in special education have been emphasized.
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">Jul 06</span>
+        <span class="timeline-title">not much happened today</span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            <span class="tag">Info</span>
+            <span class="tag">Update</span>
+          </div>
+          <div class="tooltip-desc">Detailed description about the event that happened on this day.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">Jul 05</span>
+        <span class="timeline-title">not much happened today</span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            <span class="tag">Info</span>
+            <span class="tag">Update</span>
+          </div>
+          <div class="tooltip-desc">Detailed description about the event that happened on this day.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">Jul 04</span>
+        <span class="timeline-title">not much happened today</span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            <span class="tag">Info</span>
+            <span class="tag">Update</span>
+          </div>
+          <div class="tooltip-desc">Detailed description about the event that happened on this day.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">Jul 03</span>
+        <span class="timeline-title">not much happened today</span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            <span class="tag">Info</span>
+            <span class="tag">Update</span>
+          </div>
+          <div class="tooltip-desc">Detailed description about the event that happened on this day.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">Jul 02</span>
+        <span class="timeline-title">not much happened today</span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            <span class="tag">Info</span>
+            <span class="tag">Update</span>
+          </div>
+          <div class="tooltip-desc">Detailed description about the event that happened on this day.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-date">Jul 01</span>
+        <span class="timeline-title">not much happened today</span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            <span class="tag">Info</span>
+            <span class="tag">Update</span>
+          </div>
+          <div class="tooltip-desc">Detailed description about the event that happened on this day.</div>
+        </div>
+      </div>
+      <!-- Add more placeholder days as needed -->
+    </div>
+  </div>
+  <script>
+    // Simple filter for placeholder
+    const filterInput = document.getElementById('filter');
+    const timeline = document.getElementById('timeline');
+    filterInput.addEventListener('input', function() {
+      const val = this.value.toLowerCase();
+      document.querySelectorAll('.timeline-item').forEach(item => {
+        const title = item.querySelector('.timeline-title').textContent.toLowerCase();
+        if (title.includes(val)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
