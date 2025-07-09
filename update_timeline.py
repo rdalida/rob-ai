@@ -2,12 +2,15 @@
 """
 Script to automatically update sbms.html with LLM-generated content.
 Extracts headlines from news digest files and uses OpenAI API to generate
-timeline titles and tooltip summaries.
+timeline titles and tooltip summaries. Automatically detects new digest files
+and adds them to the timeline.
 """
 
 import os
 import re
 import json
+import glob
+from datetime import datetime
 from pathlib import Path
 from bs4 import BeautifulSoup
 from openai import OpenAI
@@ -67,10 +70,20 @@ class TimelineUpdater:
             for article in articles
         ])
         
-        prompt = f"""Based on these school health Medicaid news articles, generate:
+        prompt = f"""Based on these school health news articles, analyze them for School-Based Medicaid Services (SBMS) relevance and generate:
 
-1. A concise timeline title (max 8 words) suitable for a news timeline
+1. A concise timeline title (max 8 words) - Follow these rules:
+   - IF there are updates/changes to Medicaid regulations, federal Medicaid guidance, school-based Medicaid policies, or anything directly affecting Medicaid in schools: Create a descriptive title about those changes
+   - IF there are NO significant Medicaid-related updates: Use "Not much happened today" or "No significant news events"
+
 2. A brief tooltip summary (1-2 sentences) explaining the key developments
+
+Priority topics for timeline titles:
+- Medicaid regulation changes
+- Federal CMS guidance for schools
+- School-based Medicaid billing/compliance updates
+- State Medicaid policy changes affecting schools
+- School health funding related to Medicaid
 
 Articles:
 {articles_text}
@@ -83,7 +96,7 @@ Please respond in this exact JSON format:
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4.1-mini",
                 messages=[
                     {"role": "system", "content": "You are a news summarization expert specializing in healthcare policy and Medicaid programs."},
                     {"role": "user", "content": prompt}
@@ -134,21 +147,85 @@ Please respond in this exact JSON format:
         
         return list(tags)[:4]  # Limit to 4 tags
     
-    def update_sbms_html(self, date_str, timeline_title, tooltip_summary, tags):
-        """Update the sbms.html file with new timeline content."""
+    def find_digest_files(self):
+        """Find all digest files in the news folder and return them sorted by date."""
+        news_dir = self.base_dir / 'news'
+        digest_pattern = news_dir / 'digest_*.html'
+        
+        digest_files = []
+        for file_path in glob.glob(str(digest_pattern)):
+            file_path = Path(file_path)
+            
+            # Verify the file actually exists
+            if not file_path.exists():
+                continue
+                
+            file_name = file_path.name
+            # Extract date from filename (digest_YYYYMMDD.html)
+            match = re.search(r'digest_(\d{8})\.html', file_name)
+            if match:
+                date_str = match.group(1)
+                try:
+                    # Parse date to ensure it's valid
+                    date_obj = datetime.strptime(date_str, '%Y%m%d')
+                    digest_files.append({
+                        'file_path': file_path,
+                        'date_str': date_str,
+                        'date_obj': date_obj,
+                        'formatted_date': date_obj.strftime('%b %d')  # e.g., "Jul 09"
+                    })
+                except ValueError:
+                    print(f"⚠️  Invalid date format in {file_name}")
+                    continue
+        
+        # Sort by date (newest first)
+        digest_files.sort(key=lambda x: x['date_obj'], reverse=True)
+        print(f"📁 Found digest files: {[f['file_path'].name for f in digest_files]}")
+        return digest_files
+    
+    def get_existing_timeline_dates(self):
+        """Get all dates that already exist in the timeline."""
         sbms_file = self.base_dir / 'sbms.html'
         
         try:
             with open(sbms_file, 'r', encoding='utf-8') as f:
                 content = f.read()
             
-            # Create new tooltip content
+            # Find all timeline dates in formatted form (e.g., "Jul 08")
+            date_pattern = r'<span class="timeline-date">([^<]+)</span>'
+            matches = re.findall(date_pattern, content)
+            return set(matches)
+            
+        except Exception as e:
+            print(f"❌ Error reading sbms.html: {e}")
+            return set()
+    
+    def format_date_for_timeline(self, date_str):
+        """Convert YYYYMMDD to timeline format (e.g., Jul 09)."""
+        try:
+            date_obj = datetime.strptime(date_str, '%Y%m%d')
+            return date_obj.strftime('%b %d')
+        except ValueError:
+            return date_str
+    
+    def update_existing_timeline_entry(self, digest_file, timeline_title, tooltip_summary, tags):
+        """Update an existing timeline entry in sbms.html."""
+        sbms_file = self.base_dir / 'sbms.html'
+        
+        try:
+            with open(sbms_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Create new timeline entry HTML components
             tags_html = ''.join([f'<span class="tag">{tag}</span>' for tag in tags])
+            formatted_date = digest_file['formatted_date']
+            digest_filename = digest_file['file_path'].name
             
-            # Pattern to find and replace the Jul 07 timeline item
-            pattern = r'(<div class="timeline-item">\s*<span class="timeline-date">Jul 07</span>\s*<span class="timeline-title">)[^<]*(.*?</div>\s*</div>)'
+            # Pattern to find the specific timeline item by date
+            # This matches the entire timeline item including the tooltip
+            pattern = rf'(<div class="timeline-item">\s*<span class="timeline-date">{re.escape(formatted_date)}</span>\s*<span class="timeline-title">)[^<]*(<a[^>]*>)?[^<]*(?:</a>)?(</span>\s*<div class="timeline-tooltip">[\s\S]*?</div>\s*</div>)'
             
-            replacement = f'''\\g<1><a href="news/digest_20250708.html" style="color:inherit;text-decoration:underline;">{timeline_title}</a></span>
+            replacement = f'''\\g<1><a href="news/{digest_filename}" style="color:inherit;text-decoration:underline;">{timeline_title}</a></span>
         <div class="timeline-tooltip">
           <div class="tags">
             {tags_html}
@@ -165,56 +242,115 @@ Please respond in this exact JSON format:
             if new_content != content:
                 with open(sbms_file, 'w', encoding='utf-8') as f:
                     f.write(new_content)
-                print("✅ Successfully updated sbms.html")
+                print(f"✅ Updated existing timeline entry for {formatted_date}")
                 return True
             else:
-                print("⚠️  No changes made to sbms.html")
+                print(f"⚠️  Could not update timeline entry for {formatted_date}")
                 return False
                 
         except Exception as e:
-            print(f"❌ Error updating sbms.html: {e}")
+            print(f"❌ Error updating timeline entry: {e}")
+            return False
+
+    def add_new_timeline_entry(self, digest_file, timeline_title, tooltip_summary, tags):
+        """Add a new timeline entry to sbms.html."""
+        sbms_file = self.base_dir / 'sbms.html'
+        
+        try:
+            with open(sbms_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Create new timeline entry HTML
+            tags_html = ''.join([f'<span class="tag">{tag}</span>' for tag in tags])
+            formatted_date = digest_file['formatted_date']
+            digest_filename = digest_file['file_path'].name
+            
+            new_entry = f'''      <div class="timeline-item">
+        <span class="timeline-date">{formatted_date}</span>
+        <span class="timeline-title"><a href="news/{digest_filename}" style="color:inherit;text-decoration:underline;">{timeline_title}</a></span>
+        <div class="timeline-tooltip">
+          <div class="tags">
+            {tags_html}
+          </div>
+          <div class="tooltip-desc">
+            {tooltip_summary}
+          </div>
+        </div>
+      </div>'''
+            
+            # Find the timeline section and add the new entry at the top (after opening tag)
+            timeline_pattern = r'(<div class="timeline" id="timeline">\s*)'
+            
+            def add_entry(match):
+                return f'{match.group(1)}\n{new_entry}'
+            
+            new_content = re.sub(timeline_pattern, add_entry, content)
+            
+            if new_content != content:
+                with open(sbms_file, 'w', encoding='utf-8') as f:
+                    f.write(new_content)
+                print(f"✅ Added new timeline entry for {formatted_date}")
+                return True
+            else:
+                print("⚠️  Could not find timeline section to add entry")
+                return False
+                
+        except Exception as e:
+            print(f"❌ Error adding timeline entry: {e}")
             return False
     
     def run(self):
         """Main function to run the timeline update process."""
         print("🚀 Starting timeline update process...")
         
-        # Path to the latest digest file
-        digest_file = self.base_dir / 'news' / 'digest_20250708.html'
+        # Find all digest files
+        digest_files = self.find_digest_files()
         
-        if not digest_file.exists():
-            print(f"❌ Digest file not found: {digest_file}")
+        if not digest_files:
+            print("❌ No digest files found")
             return False
         
-        print(f"📖 Extracting headlines from {digest_file}")
-        articles = self.extract_headlines_from_digest(digest_file)
+        # Get existing timeline dates (in formatted form like "Jul 08")
+        existing_dates = self.get_existing_timeline_dates()
+        print(f"📅 Existing timeline dates: {sorted(existing_dates)}")
         
-        if not articles:
-            print("⚠️  No articles found in digest file")
-            return False
+        for digest_file in digest_files:
+            formatted_date = digest_file['formatted_date']
+            
+            print(f"📖 Processing {digest_file['file_path'].name} for {formatted_date}")
+            articles = self.extract_headlines_from_digest(digest_file['file_path'])
+            
+            if not articles:
+                print("⚠️  No articles found in digest file")
+                continue
+            
+            print(f"📄 Found {len(articles)} articles")
+            
+            print("🤖 Generating timeline content with OpenAI...")
+            timeline_title, tooltip_summary = self.generate_timeline_content(articles)
+            
+            print("🏷️  Extracting relevant tags...")
+            tags = self.extract_tags_from_articles(articles)
+            
+            print(f"📝 Generated content:")
+            print(f"   Title: {timeline_title}")
+            print(f"   Summary: {tooltip_summary}")
+            print(f"   Tags: {', '.join(tags)}")
+            
+            # Check if this date already exists in the timeline
+            if formatted_date in existing_dates:
+                print(f"� Updating existing timeline entry for {formatted_date}")
+                success = self.update_existing_timeline_entry(digest_file, timeline_title, tooltip_summary, tags)
+            else:
+                print(f"➕ Adding new timeline entry for {formatted_date}")
+                success = self.add_new_timeline_entry(digest_file, timeline_title, tooltip_summary, tags)
+            
+            if success:
+                print("✅ Timeline update completed successfully!")
+            else:
+                print("❌ Timeline update failed")
         
-        print(f"📄 Found {len(articles)} articles")
-        
-        print("🤖 Generating timeline content with OpenAI...")
-        timeline_title, tooltip_summary = self.generate_timeline_content(articles)
-        
-        print("🏷️  Extracting relevant tags...")
-        tags = self.extract_tags_from_articles(articles)
-        
-        print(f"📝 Generated content:")
-        print(f"   Title: {timeline_title}")
-        print(f"   Summary: {tooltip_summary}")
-        print(f"   Tags: {', '.join(tags)}")
-        
-        print("💾 Updating sbms.html...")
-        success = self.update_sbms_html('Jul 07', timeline_title, tooltip_summary, tags)
-        
-        if success:
-            print("✅ Timeline update completed successfully!")
-        else:
-            print("❌ Timeline update failed")
-        
-        return success
+        return True
 
 def main():
     """Main entry point."""
