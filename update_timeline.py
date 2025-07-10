@@ -37,27 +37,80 @@ class TimelineUpdater:
             
             soup = BeautifulSoup(content, 'html.parser')
             
-            # Extract article titles and excerpts
-            articles = []
-            article_items = soup.find_all('div', class_='article-item')
+            # First, try to extract from JavaScript newsData array (new format)
+            articles = self._extract_from_js_newsdata(content)
             
-            for item in article_items:
-                title_elem = item.find('h4')
-                excerpt_elem = item.find('p', class_='excerpt')
-                
-                if title_elem and excerpt_elem:
-                    title = title_elem.get_text().strip()
-                    excerpt = excerpt_elem.get_text().strip()
-                    articles.append({
-                        'title': title,
-                        'excerpt': excerpt
-                    })
+            # If no articles found, try the old HTML format
+            if not articles:
+                articles = self._extract_from_html_format(soup)
             
             return articles
             
         except Exception as e:
             print(f"Error extracting headlines from {digest_file_path}: {e}")
             return []
+    
+    def _extract_from_js_newsdata(self, content):
+        """Extract articles from JavaScript newsData array."""
+        articles = []
+        
+        # Find the newsData array in the JavaScript
+        import re
+        import json
+        
+        # Look for newsData = [...]
+        pattern = r'const newsData = (\[.*?\]);'
+        match = re.search(pattern, content, re.DOTALL)
+        
+        if match:
+            try:
+                # Parse the JSON array
+                news_data_str = match.group(1)
+                news_data = json.loads(news_data_str)
+                
+                # Extract title and summary from each article
+                for item in news_data:
+                    title = item.get('title', '')
+                    summary = item.get('summary', '')
+                    
+                    if title and summary:
+                        articles.append({
+                            'title': title,
+                            'excerpt': summary
+                        })
+                
+                print(f"📰 Extracted {len(articles)} articles from JavaScript newsData")
+                return articles
+                
+            except json.JSONDecodeError as e:
+                print(f"Error parsing newsData JSON: {e}")
+                return []
+        
+        return []
+    
+    def _extract_from_html_format(self, soup):
+        """Extract articles from old HTML format (fallback)."""
+        articles = []
+        
+        # Extract article titles and excerpts from HTML
+        article_items = soup.find_all('div', class_='article-item')
+        
+        for item in article_items:
+            title_elem = item.find('h4')
+            excerpt_elem = item.find('p', class_='excerpt')
+            
+            if title_elem and excerpt_elem:
+                title = title_elem.get_text().strip()
+                excerpt = excerpt_elem.get_text().strip()
+                articles.append({
+                    'title': title,
+                    'excerpt': excerpt
+                })
+        
+        if articles:
+            print(f"📰 Extracted {len(articles)} articles from HTML format")
+        
+        return articles
     
     def generate_timeline_content(self, articles):
         """Use OpenAI API to generate timeline title and tooltip summary."""
@@ -300,7 +353,7 @@ Please respond in this exact JSON format:
             return False
     
     def run(self):
-        """Main function to run the timeline update process."""
+        """Main function to run the timeline update process (add-only mode)."""
         print("🚀 Starting timeline update process...")
         
         # Find all digest files
@@ -316,6 +369,10 @@ Please respond in this exact JSON format:
         
         for digest_file in digest_files:
             formatted_date = digest_file['formatted_date']
+            
+            if formatted_date in existing_dates:
+                print(f"⏩ Skipping {formatted_date} (already exists in timeline)")
+                continue
             
             print(f"📖 Processing {digest_file['file_path'].name} for {formatted_date}")
             articles = self.extract_headlines_from_digest(digest_file['file_path'])
@@ -337,13 +394,8 @@ Please respond in this exact JSON format:
             print(f"   Summary: {tooltip_summary}")
             print(f"   Tags: {', '.join(tags)}")
             
-            # Check if this date already exists in the timeline
-            if formatted_date in existing_dates:
-                print(f"� Updating existing timeline entry for {formatted_date}")
-                success = self.update_existing_timeline_entry(digest_file, timeline_title, tooltip_summary, tags)
-            else:
-                print(f"➕ Adding new timeline entry for {formatted_date}")
-                success = self.add_new_timeline_entry(digest_file, timeline_title, tooltip_summary, tags)
+            print(f"➕ Adding new timeline entry for {formatted_date}")
+            success = self.add_new_timeline_entry(digest_file, timeline_title, tooltip_summary, tags)
             
             if success:
                 print("✅ Timeline update completed successfully!")
