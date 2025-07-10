@@ -205,9 +205,15 @@
       "answer": "Classroom instruction by a general teacher"
     },
     {
-      "type": "short-answer",
-      "question": "What is 'timely filing' in Medicaid billing, and what is a common timely filing limit for school-based Medicaid claims?",
-      "answer": "Timely filing is the period within which a Medicaid claim must be submitted after the date of service. A common limit is 365 days (1 year), but it can vary by state."
+      "type": "multiple-choice",
+      "question": "What is a common timely filing limit for school-based Medicaid claims?",
+      "options": [
+        "30 Days",
+        "90 Days",
+        "180 Days",
+        "365 Days"
+      ],
+      "answer": "365 Days"
     },
     {
       "type": "multiple-choice",
@@ -588,12 +594,15 @@
         }
 
         function selectOption(optionElement, option) {
-            if (selectedOption) return;
-            
-            // Mark selected option
+            // Remove selection from all options
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('option-selected');
+            });
+
+            // Mark the clicked option as selected
             selectedOption = option;
             optionElement.classList.add('option-selected');
-            
+
             // Enable next button
             nextQuestionBtn.disabled = false;
         }
