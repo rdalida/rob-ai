@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster - Test Your Knowledge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .pulse-animation {
+            animation: pulse 1.5s infinite;
+        }
+        .option-selected {
+            background-color: #3b82f6 !important;
+            color: white !important;
+            border-color: #3b82f6 !important;
+        }
+        .option-correct {
+            background-color: #10b981 !important;
+            color: white !important;
+            border-color: #10b981 !important;
+        }
+        .option-wrong {
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .timer-low {
+            color: #ef4444;
+            animation: pulse 0.5s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-indigo-700 mb-2">Skills Assessment</h1>
+            <p class="text-gray-600">Test your Medicaid knowledge</p>
+        </header>
+
+        <!-- Quiz Selection Screen -->
+        <div id="quiz-selection" class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Choose Your Quiz</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="quiz-option bg-indigo-50 hover:bg-indigo-100 border-2 border-indigo-200 rounded-lg p-4 cursor-pointer transition-all duration-300" data-category="general">
+                    <div class="flex items-center">
+                        <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-globe text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-800">General Knowledge</h3>
+                            <p class="text-sm text-gray-600">5 questions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-option bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 rounded-lg p-4 cursor-pointer transition-all duration-300" data-category="medicaid">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-user-md text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-800">Medicaid Regulations</h3>
+                            <p class="text-sm text-gray-600">5 questions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-option bg-teal-50 hover:bg-teal-100 border-2 border-teal-200 rounded-lg p-4 cursor-pointer transition-all duration-300" data-category="system">
+                    <div class="flex items-center">
+                        <div class="bg-teal-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-cogs text-teal-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-800">System Knowledge</h3>
+                            <p class="text-sm text-gray-600">5 questions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-option bg-purple-50 hover:bg-purple-100 border-2 border-purple-200 rounded-lg p-4 cursor-pointer transition-all duration-300" data-category="process">
+                    <div class="flex items-center">
+                        <div class="bg-purple-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-tasks text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-800">Process Knowledge</h3>
+                            <p class="text-sm text-gray-600">5 questions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <button id="start-quiz" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    Start Quiz <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen (Initially Hidden) -->
+        <div id="quiz-screen" class="hidden bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center">
+                    <span id="quiz-category" class="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">General</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-gray-500 mr-2"></i>
+                        <span id="timer" class="font-medium">30</span>s
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                        <span id="score" class="font-medium">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="progress-bar bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+            </div>
+
+            <div id="question-container">
+                <h2 id="question" class="text-xl font-medium text-gray-800 mb-6"></h2>
+                <div id="options" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <button id="quit-quiz" class="text-gray-600 hover:text-gray-800 font-medium py-2 px-4 rounded-lg transition-all duration-300">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Quit
+                </button>
+                <button id="next-question" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    Next <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen (Initially Hidden) -->
+        <div id="results-screen" class="hidden bg-white rounded-xl shadow-lg p-8 mb-8 text-center">
+            <div class="mb-6">
+                <i class="fas fa-trophy text-yellow-500 text-6xl mb-4"></i>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Quiz Completed!</h2>
+                <p id="quiz-category-result" class="text-gray-600 mb-6">General Knowledge</p>
+            </div>
+
+            <div class="bg-indigo-50 rounded-xl p-6 mb-8 max-w-md mx-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-gray-700">Your Score:</span>
+                    <span id="final-score" class="text-2xl font-bold text-indigo-700">0</span>
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-gray-700">Correct Answers:</span>
+                    <span id="correct-answers" class="text-xl font-medium text-green-600">0/10</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700">Time Taken:</span>
+                    <span id="time-taken" class="text-xl font-medium text-blue-600">0s</span>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-2">
+                    <div id="score-bar" class="h-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600" style="width: 0%"></div>
+                </div>
+                <p id="performance-message" class="text-gray-600">Keep practicing to improve!</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="restart-quiz" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300">
+                    <i class="fas fa-redo mr-2"></i> Play Again
+                </button>
+                <button id="choose-new-quiz" class="bg-white hover:bg-gray-100 text-gray-800 font-medium py-2 px-6 border border-gray-300 rounded-lg transition-all duration-300">
+                    <i class="fas fa-list mr-2"></i> Choose Another Quiz
+                </button>
+            </div>
+            <!-- Add this inside your Results Screen -->
+            <div id="submit-results-form" class="mb-6">
+                <input id="user-name" type="text" placeholder="Your Name" class="border p-2 rounded mb-2 w-full" />
+                <input id="user-email" type="email" placeholder="Your Email" class="border p-2 rounded mb-2 w-full" />
+                <button id="submit-results-btn" class="bg-green-600 text-white px-4 py-2 rounded">Submit Results</button>
+                <div id="submit-status" class="mt-2 text-sm"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data
+        const quizData = {
+  "medicaid": [
+    {
+      "type": "multiple-choice",
+      "question": "Which of the following services is generally NOT billable under school-based Medicaid?",
+      "options": [
+        "Speech therapy",
+        "Nursing services",
+        "Classroom instruction by a general teacher",
+        "Occupational therapy"
+      ],
+      "answer": "Classroom instruction by a general teacher"
+    },
+    {
+      "type": "short-answer",
+      "question": "What is 'timely filing' in Medicaid billing, and what is a common timely filing limit for school-based Medicaid claims?",
+      "answer": "Timely filing is the period within which a Medicaid claim must be submitted after the date of service. A common limit is 365 days (1 year), but it can vary by state."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which of the following is a requirement for a service to be Medicaid-billable in most states?",
+      "options": [
+        "Service is included in the student's IEP or IFSP",
+        "Service is provided by a school volunteer",
+        "Service is provided in a group larger than state maximum",
+        "Service is provided only during after-school activities"
+      ],
+      "answer": "Service is included in the student's IEP or IFSP"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which states require parental consent before billing Medicaid for school-based services?",
+      "options": [
+        "Texas only",
+        "Florida and Wisconsin only",
+        "All states per FERPA and IDEA requirements",
+        "Virginia only"
+      ],
+      "answer": "All states per FERPA and IDEA requirements"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which of these is required on a Medicaid claim to ensure compliance?",
+      "options": [
+        "Date and duration of service",
+        "Student's grade level only",
+        "Parent's employment status",
+        "Name of bus driver"
+      ],
+      "answer": "Date and duration of service"
+    }
+  ],
+  "system": [
+    {
+      "type": "multiple-choice",
+      "question": "Which report in Service Management shows all services delivered for a student during a selected period?",
+      "options": [
+        "Service List report",
+        "Provider Caseload report",
+        "Student Eligibility report",
+        "Transportation Verification Form"
+      ],
+      "answer": "Service List report"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which of the following validations must be passed in Service Management before a service can be billed to Medicaid?",
+      "options": [
+        "Valid parental consent",
+        "Student participates in after-school programs",
+        "Service is delivered off campus",
+        "Student's home address is confirmed"
+      ],
+      "answer": "Valid parental consent"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "What report can a district admin run to view Medicaid Reimbursements?",
+      "options": [
+        "Remittance Adjustment Report",
+        "Service List",
+        "Non-Claimed Service Manager",
+        "Revenue Analysis"
+      ],
+      "answer": "Revenue Analysis"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which feature in Service Management allows you to check if a student was Medicaid eligible on the service date?",
+      "options": [
+        "Student Eligibility report",
+        "Caseload by Provider report",
+        "Service List report",
+        "Parental Consent report"
+      ],
+      "answer": "Student Eligibility report"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "In Service Management, which of the following is a required field for every Medicaid-billable service record?",
+      "options": [
+        "Date of service",
+        "Student's lunch code",
+        "Teacher's room number",
+        "Parent's employment status"
+      ],
+      "answer": "Date of service"
+    }
+  ],
+  "process": [
+    {
+      "type": "multiple-choice",
+      "question": "Who should you reach out to when escalating client concerns or dissatisfaction?",
+      "options": [
+        "CSM (Client Success Manager)",
+        "School Principal",
+        "State Medicaid Office",
+        "Parent of the student"
+      ],
+      "answer": "CSM (Client Success Manager)"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "What is the standard cadence for scheduled client meetings?",
+      "options": [
+        "Monthly",
+        "Weekly",
+        "Quarterly",
+        "Annually"
+      ],
+      "answer": "Monthly"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "When should meeting agendas be sent to clients before a scheduled meeting?",
+      "options": [
+        "At least one business day prior",
+        "The morning of the meeting",
+        "After the meeting",
+        "At the end of the month"
+      ],
+      "answer": "At least one business day prior"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "After a client meeting, what must be included in the follow-up agenda update?",
+      "options": [
+        "Frontline and District Action Items",
+        "List of all school staff",
+        "Copies of all claims",
+        "A summary of Medicaid regulations"
+      ],
+      "answer": "Frontline and District Action Items"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "If you discover an import file has not been sent for a week, what is your responsibility?",
+      "options": [
+        "Notify the client about the missing file",
+        "Wait for the next import",
+        "Contact the state Medicaid office",
+        "Ignore it"
+      ],
+      "answer": "Notify the client about the missing file"
+    }
+  ],
+  "general": [
+    {
+      "type": "multiple-choice",
+      "question": "Where can you find SFTP credentials for client data transfers?",
+      "options": [
+        "Smartsheet",
+        "Google Drive",
+        "Service Management",
+        "Outlook Calendar"
+      ],
+      "answer": "Smartsheet"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which tools are used to import data in bulk for Frontline Medicaid clients?",
+      "options": [
+        "SPM Sync and Import Tool",
+        "Excel and Google Sheets",
+        "PowerPoint and Word",
+        "Adobe Acrobat and Notepad"
+      ],
+      "answer": "SPM Sync and Import Tool"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Where should a Medicaid Client Manager submit product enhancement requests or report product bugs?",
+      "options": [
+        "Zendesk",
+        "Outlook Email",
+        "Slack",
+        "SharePoint"
+      ],
+      "answer": "Zendesk"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which platform is commonly used for sharing process documentation and client-facing templates?",
+      "options": [
+        "SharePoint",
+        "Smartsheet",
+        "Google Slides",
+        "Dropbox"
+      ],
+      "answer": "Smartsheet"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "What application is recommended for reviewing import process integrity and summary reports?",
+      "options": [
+        "Power BI",
+        "Microsoft Word",
+        "Adobe Acrobat",
+        "Photoshop"
+      ],
+      "answer": "Power BI"
+    }
+  ]
+};
+
+        // DOM Elements
+        const quizSelection = document.getElementById('quiz-selection');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const startQuizBtn = document.getElementById('start-quiz');
+        const nextQuestionBtn = document.getElementById('next-question');
+        const quitQuizBtn = document.getElementById('quit-quiz');
+        const restartQuizBtn = document.getElementById('restart-quiz');
+        const chooseNewQuizBtn = document.getElementById('choose-new-quiz');
+        const quizCategory = document.getElementById('quiz-category');
+        const quizCategoryResult = document.getElementById('quiz-category-result');
+        const questionElement = document.getElementById('question');
+        const optionsContainer = document.getElementById('options');
+        const timerElement = document.getElementById('timer');
+        const scoreElement = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScoreElement = document.getElementById('final-score');
+        const correctAnswersElement = document.getElementById('correct-answers');
+        const timeTakenElement = document.getElementById('time-taken');
+        const scoreBar = document.getElementById('score-bar');
+        const performanceMessage = document.getElementById('performance-message');
+
+        // Quiz variables
+        let currentQuiz = '';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let timeLeft = 30;
+        let quizStartTime;
+        let selectedOption = null;
+        let correctAnswer = null;
+
+        // Event Listeners
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove active class from all options
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('ring-2', 'ring-indigo-500', 'pulse-animation');
+                });
+                
+                // Add active class to selected option
+                option.classList.add('ring-2', 'ring-indigo-500', 'pulse-animation');
+                
+                currentQuiz = option.getAttribute('data-category');
+                startQuizBtn.disabled = false;
+            });
+        });
+
+        startQuizBtn.addEventListener('click', startQuiz);
+        nextQuestionBtn.addEventListener('click', nextQuestion);
+        quitQuizBtn.addEventListener('click', quitQuiz);
+        restartQuizBtn.addEventListener('click', restartQuiz);
+        chooseNewQuizBtn.addEventListener('click', chooseNewQuiz);
+        document.getElementById('submit-results-btn').addEventListener('click', async () => {
+  const name = document.getElementById('user-name').value.trim();
+  const email = document.getElementById('user-email').value.trim();
+  const score = finalScoreElement.textContent; // or use your score variable
+  const category = quizCategoryResult.textContent; // or use your category variable
+
+  if (!name || !email) {
+    document.getElementById('submit-status').textContent = 'Please enter your name and email.';
+    return;
+  }
+
+  document.getElementById('submit-status').textContent = 'Submitting...';
+
+  const res = await fetch('https://nodejs-serverless-function-express-peach-seven.vercel.app/api/submit-results', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, score: Number(score), category })
+  });
+
+  const data = await res.json();
+  if (data.success) {
+    document.getElementById('submit-status').textContent = 'Results submitted!';
+  } else {
+    document.getElementById('submit-status').textContent = 'Submission failed: ' + (data.error || 'Unknown error');
+  }
+});
+
+        // Functions
+        function startQuiz() {
+            quizSelection.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            
+            // Set quiz category
+            const categoryNames = {
+                'medicaid': 'Medicaid Regulations',
+                'system': 'System Knowledge',
+                'process': 'Process Knowledge',
+                'general': 'General Knowledge'
+            };
+            quizCategory.textContent = categoryNames[currentQuiz];
+            quizCategoryResult.textContent = categoryNames[currentQuiz];
+            
+            // Reset quiz variables
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreElement.textContent = score;
+            quizStartTime = new Date().getTime();
+            
+            // Load first question
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            // Reset timer
+            clearInterval(timer);
+            timeLeft = 30;
+            timerElement.textContent = timeLeft;
+            timerElement.classList.remove('timer-low');
+            
+            // Start timer
+            timer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if (timeLeft <= 5) {
+                    timerElement.classList.add('timer-low');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timeUp();
+                }
+            }, 1000);
+            
+            // Get current question
+            const currentQuestion = quizData[currentQuiz][currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+            correctAnswer = currentQuestion.answer;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            if (currentQuestion.type === 'multiple-choice') {
+                currentQuestion.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option bg-gray-50 hover:bg-gray-100 border-2 border-gray-200 rounded-lg p-4 cursor-pointer transition-all duration-300';
+                    optionElement.innerHTML = `
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center mr-3 font-medium">${String.fromCharCode(65 + index)}</div>
+                            <div>${option}</div>
+                        </div>
+                    `;
+                    optionElement.addEventListener('click', () => selectOption(optionElement, option));
+                    optionsContainer.appendChild(optionElement);
+                });
+                // Disable next button until an option is selected
+                nextQuestionBtn.disabled = true;
+                selectedOption = null;
+            } else if (currentQuestion.type === 'short-answer') {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'w-full border-2 border-gray-200 rounded-lg p-3 mb-4';
+                input.placeholder = 'Type your answer...';
+                input.addEventListener('input', () => {
+                    selectedOption = input.value.trim();
+                    nextQuestionBtn.disabled = selectedOption.length === 0;
+                });
+                optionsContainer.appendChild(input);
+                nextQuestionBtn.disabled = true;
+                selectedOption = '';
+            }
+            
+            // Update progress
+            const progress = ((currentQuestionIndex) / quizData[currentQuiz].length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function selectOption(optionElement, option) {
+            if (selectedOption) return;
+            
+            // Mark selected option
+            selectedOption = option;
+            optionElement.classList.add('option-selected');
+            
+            // Enable next button
+            nextQuestionBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            clearInterval(timer);
+            
+            // Check if answer is correct
+            const currentQuestion = quizData[currentQuiz][currentQuestionIndex];
+            let isCorrect = false;
+            if (currentQuestion.type === 'multiple-choice') {
+                isCorrect = selectedOption === correctAnswer;
+                document.querySelectorAll('.option').forEach(opt => {
+                    const optText = opt.textContent.trim().substring(3);
+                    if (optText === correctAnswer) {
+                        opt.classList.add('option-correct');
+                    } else if (optText === selectedOption && !isCorrect) {
+                        opt.classList.add('option-wrong');
+                    }
+                    opt.style.pointerEvents = 'none';
+                });
+            } else if (currentQuestion.type === 'short-answer') {
+                isCorrect = selectedOption && selectedOption.toLowerCase() === correctAnswer.toLowerCase();
+                const input = optionsContainer.querySelector('input');
+                if (isCorrect) {
+                    input.classList.add('border-green-500', 'bg-green-50');
+                } else {
+                    input.classList.add('border-red-500', 'bg-red-50');
+                }
+                input.disabled = true;
+            }
+            
+            // Update score if correct
+            if (isCorrect) {
+                score += 10;
+                scoreElement.textContent = score;
+            }
+            
+            // Move to next question or show results
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData[currentQuiz].length) {
+                setTimeout(() => {
+                    loadQuestion();
+                }, 1500);
+            } else {
+                setTimeout(showResults, 1500);
+            }
+        }
+
+        function timeUp() {
+            const currentQuestion = quizData[currentQuiz][currentQuestionIndex];
+            if (currentQuestion.type === 'multiple-choice') {
+                document.querySelectorAll('.option').forEach(opt => {
+                    const optText = opt.textContent.trim().substring(3);
+                    if (optText === correctAnswer) {
+                        opt.classList.add('option-correct');
+                    }
+                    opt.style.pointerEvents = 'none';
+                });
+            } else if (currentQuestion.type === 'short-answer') {
+                const input = optionsContainer.querySelector('input');
+                input.classList.add('border-yellow-500', 'bg-yellow-50');
+                input.disabled = true;
+            }
+            nextQuestionBtn.disabled = true;
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData[currentQuiz].length) {
+                setTimeout(() => { loadQuestion(); }, 1500);
+            } else {
+                setTimeout(showResults, 1500);
+            }
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+            
+            // Calculate time taken
+            const timeTaken = Math.floor((new Date().getTime() - quizStartTime) / 1000);
+            timeTakenElement.textContent = `${timeTaken}s`;
+            
+            // Set final score
+            finalScoreElement.textContent = score;
+            correctAnswersElement.textContent = `${score / 10}/${quizData[currentQuiz].length}`;
+            
+            // Set score bar
+            const percentage = (score / (quizData[currentQuiz].length * 10)) * 100;
+            scoreBar.style.width = `${percentage}%`;
+            
+            // Set performance message
+            if (percentage >= 80) {
+                performanceMessage.textContent = "Excellent! You're a quiz master!";
+                performanceMessage.className = "text-green-600 font-medium";
+            } else if (percentage >= 50) {
+                performanceMessage.textContent = "Good job! You know your stuff!";
+                performanceMessage.className = "text-blue-600 font-medium";
+            } else {
+                performanceMessage.textContent = "Keep practicing to improve!";
+                performanceMessage.className = "text-gray-600";
+            }
+        }
+
+        function quitQuiz() {
+            if (confirm("Are you sure you want to quit the quiz? Your progress will be lost.")) {
+                quizScreen.classList.add('hidden');
+                quizSelection.classList.remove('hidden');
+                clearInterval(timer);
+                
+                // Reset quiz selection
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('ring-2', 'ring-indigo-500', 'pulse-animation');
+                });
+                startQuizBtn.disabled = true;
+            }
+        }
+
+        function restartQuiz() {
+            resultsScreen.classList.add('hidden');
+            startQuiz();
+        }
+
+        function chooseNewQuiz() {
+            resultsScreen.classList.add('hidden');
+            quizSelection.classList.remove('hidden');
+            
+            // Reset quiz selection
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('ring-2', 'ring-indigo-500', 'pulse-animation');
+            });
+            startQuizBtn.disabled = true;
+        }
+
+        
+
+
+    </script>
+</body>
+</html>
