@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBMS News Digest - July 14, 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .category-active {
+            border-bottom: 3px solid #3b82f6;
+        }
+        #loading-spinner {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-school text-3xl mr-3"></i>
+                    <h1 class="text-2xl md:text-3xl font-bold">SBMS News Digest</h1>
+                </div>
+                <div class="relative w-full md:w-64">
+                    <input type="text" id="search-input" placeholder="Search articles..." class="w-full py-2 px-4 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <button id="search-btn" class="absolute right-2 top-2 text-blue-600">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800">July 14, 2025</h2>
+            <p class="text-gray-600 mb-6">11 articles from 5 sources</p>
+            
+            <div class="flex overflow-x-auto pb-4 mb-6 scrollbar-hide">
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-blue-100 text-blue-700 font-medium whitespace-nowrap category-active" data-category="all">All Articles</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-gray-100 text-gray-700 font-medium whitespace-nowrap" data-category="policy">Policy & Advocacy</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-green-100 text-green-700 font-medium whitespace-nowrap" data-category="funding">Funding Opportunities</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-purple-100 text-purple-700 font-medium whitespace-nowrap" data-category="state">State News</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-yellow-100 text-yellow-700 font-medium whitespace-nowrap" data-category="general">General News</button>
+            </div>
+
+            <div id="loading-spinner" class="text-center py-10">
+                <i class="fas fa-spinner fa-spin text-4xl text-blue-500"></i>
+                <p class="mt-4 text-gray-600">Loading articles...</p>
+            </div>
+
+            <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Articles will be inserted here by JavaScript -->
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <button id="load-more" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-full shadow-md transition duration-300">
+                    Load More Articles
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-md p-6 mb-10">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">About School-Based Medicaid Services</h2>
+            <p class="text-gray-600 mb-4">
+                School-Based Medicaid Services (SBMS) provide critical health and related services to eligible students, helping schools deliver comprehensive support while receiving Medicaid reimbursement.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-700 mb-2"><i class="fas fa-chart-line mr-2"></i>Impact</h3>
+                    <p class="text-sm text-gray-600">Millions of students receive services through school Medicaid programs annually.</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-700 mb-2"><i class="fas fa-map-marked-alt mr-2"></i>Coverage</h3>
+                    <p class="text-sm text-gray-600">Programs vary by state with different eligibility and service requirements.</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-700 mb-2"><i class="fas fa-hand-holding-usd mr-2"></i>Funding</h3>
+                    <p class="text-sm text-gray-600">Federal matching funds support states in providing essential student services.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">SBMS News Digest</h3>
+                    <p class="text-gray-400">Your source for updates on school-based Medicaid services, policy changes, and funding opportunities.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-3">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><a href="https://www.cms.gov" class="text-gray-400 hover:text-white">CMS Guidelines</a></li>
+                            <li><a href="https://www.medicaid.gov" class="text-gray-400 hover:text-white">Medicaid.gov</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">State Programs</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-3">Organizations</h4>
+                        <ul class="space-y-2">
+                            <li><a href="https://www.aasa.org" class="text-gray-400 hover:text-white">AASA</a></li>
+                            <li><a href="https://www.nasn.org" class="text-gray-400 hover:text-white">NASN</a></li>
+                            <li><a href="https://www.casecec.org" class="text-gray-400 hover:text-white">CASE</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-3">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Terms of Use</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>© July SBMS News Digest. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Article data from Python backend
+            const newsData = [{"category": "Policy \u0026 Advocacy", "date": "2025-07-13", "id": 3041, "image": "https://www.the74million.org/wp-content/uploads/2025/07/Screen-Shot-2025-07-11-at-4.52.25-PM.png", "relevance_score": 100.0, "source": "The 74", "summary": "Recent federal actions under the Trump administration have created significant uncertainty for school-based Medicaid services, particularly through funding freezes and policy shifts affecting equity and civil rights programs. Key impacts include halted reimbursements for COVID-related expenses, canceled mental health grants critical to student support, and legal battles over diversity, equity, and inclusion (DEI) policies that influence school discipline and service delivery. School Medicaid professionals should stay informed on ongoing court rulings that may restore funding and staff, prioritize compliance with evolving federal guidance, and engage in professional development to navigate these complex policy changes effectively.", "title": "Legal Scorecard: How is the Trump Education Juggernaut Faring in Court?", "url": "https://www.the74million.org/article/legal-scorecard-how-is-the-trump-education-juggernaut-faring-in-court/"}, {"category": "Policy \u0026 Advocacy", "date": "2025-07-14", "id": 8149, "image": "https://www.the74million.org/wp-content/uploads/2025/07/Mia-Ives-Rublee-Center-for-American-Progress.jpeg", "relevance_score": 87.0, "source": "The 74", "summary": "The recent One Big Beautiful Bill Act significantly cuts SNAP funding by 20% over the next decade and tightens eligibility rules, which will reduce the number of children qualifying for free meals\u2014a key trigger for school-based Medicaid and nutrition services. States will face increased financial and administrative burdens due to new cost-sharing requirements linked to payment error rates, while federal administrative funding for SNAP will be halved, raising concerns about compliance and timely processing. School-based Medicaid professionals should prepare for increased challenges in supporting students\u0027 nutrition and health needs, advocate for policy adjustments, and seek professional development on navigating evolving eligibility and billing complexities.", "title": "Fears Big Beautiful Bill Will Leave Both Cupboards and School Lunch Trays Empty", "url": "https://www.the74million.org/article/fears-big-beautiful-bill-will-leave-both-cupboards-and-school-lunch-trays-empty/"}, {"category": "Policy \u0026 Advocacy", "date": "2025-07-13", "id": 1924, "image": "https://www.the74million.org/wp-content/uploads/2025/07/5c75290d-ee66-4027-985d-61783a334a97_844x544.png", "relevance_score": 34.0, "source": "The 74", "summary": "This article highlights the critical role of father involvement and stable family structures in supporting student academic and emotional success, suggesting school-based Medicaid professionals consider family engagement strategies that actively include fathers. While not directly addressing Medicaid billing or policy, it underscores the importance of schools fostering strong school-home connections and culturally responsive practices to improve outcomes, which can align with Medicaid-funded family support services. Additionally, it encourages exploring funding and partnerships that support fatherhood initiatives and family-centered programs, emphasizing evidence-based approaches over traditional educational interventions.", "title": "Opinion: Family Structure Matters to Student Achievement. What Should We Do With That?", "url": "https://www.the74million.org/article/family-structure-matters-to-student-achievement-what-should-we-do-with-that/"}, {"category": "Policy \u0026 Advocacy", "date": "2025-07-14", "id": 913, "image": "https://imgproxy.divecdn.com/7oYwn6AgscT4szfIrt80Cp9lMKE0lRVlkS56Oxzxc6c/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMTk0Njk5MTU3LmpwZw==.webp", "relevance_score": 26.5, "source": "K-12 Dive", "summary": "We\u2019re rounding up last week\u2019s news, from the \u201cOne Big, Beautiful Bill\u201d\u00a0to a pair of transgender athletics cases headed to the Supreme Court.", "title": "Week in Review: School choice, reading gains and looming policy changes", "url": "https://www.k12dive.com/news/week-in-review-school-choice-reading-gains-policy-changes/752878/"}, {"category": "Funding Opportunities", "date": "2025-07-14", "id": 5644, "image": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 19.599999999999998, "source": "AASA News", "summary": "", "title": "Access \u0026 Opportunity (7)", "url": "https://www.aasa.org:443/search-news?Keywords=\u0026DateFacet=\u0026SortOrder=DESC\u0026TypeFacet=\u0026RowsPerPage=20\u0026Categories=454b91f4-208b-459b-8916-860592a32361"}, {"category": "Policy \u0026 Advocacy", "date": "2025-07-14", "id": 4059, "image": "https://imgproxy.divecdn.com/jCc6iDH_E72KxVPFN9gmWCqLTYB7WiSXKOQYNNXzPmc/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xMjEzNzM5MTIwLmpwZw==.webp", "relevance_score": 19.5, "source": "Education Dive", "summary": "We\u2019re rounding up last week\u2019s news, from the predicted fallout from the\u00a0new spending package\u00a0to the top\u00a0takeaways from spring enrollment data.", "title": "Week in review: GOP budget law will bring \u2018significant negative consequences,\u2019 higher ed warns", "url": "https://www.highereddive.com/news/week-in-review-gop-budget-law-will-bring-significant-negative-consequence/752826/"}, {"category": "General News", "date": "2025-07-14", "id": 1596, "image": "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 15.0, "source": "Disability Scoop", "summary": "The nation\u0027s pediatricians are getting new guidelines for how to go about evaluating children who present with global developmental delay or intellectual disability.\nThe post Pediatricians Get Updated Guidance On Diagnosing Developmental Disabilities appeared first on Disability Scoop.", "title": "Pediatricians Get Updated Guidance On Diagnosing Developmental Disabilities", "url": "https://www.disabilityscoop.com/2025/07/14/pediatricians-get-updated-guidance-on-diagnosing-developmental-disabilities/31535/"}, {"category": "General News", "date": "2025-07-14", "id": 6103, "image": "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 9.0, "source": "Education Dive", "summary": "The Oklahoma institution had shaky finances for years. And some insiders have accused it of straying from its mission of serving Native American students.", "title": "Bacone College shut down after 145 years. What went wrong?", "url": "https://www.highereddive.com/news/bacone-college-shut-down-after-145-years-what-went-wrong/752742/"}, {"category": "General News", "date": "2025-07-14", "id": 5479, "image": "https://imgproxy.divecdn.com/KCLmQv1siaH8Gxn5U9AmBdRUhQk1y3iu0UgBWXaMslU/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMTU0MDc5ODcxLmpwZw==.webp", "relevance_score": 9.0, "source": "Education Dive", "summary": "Around three-fourths of adults say college is unaffordable, though most \u201csignificantly\u201d overestimated the cost of attendance, a recent survey found.", "title": "Are misperceptions about higher education\u2019s cost causing adults to skip college?", "url": "https://www.highereddive.com/news/college-affordability-misperceptions-strada-survey/752553/"}, {"category": "General News", "date": "2025-07-14", "id": 533, "image": "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 7.0, "source": "Education Dive", "summary": "From subtle to spirited, restrooms can reinforce experience, identity and operational ease.", "title": "Designed with purpose: Why campus restrooms should reflect the school behind them", "url": "https://www.highereddive.com/spons/designed-with-purpose-why-campus-restrooms-should-reflect-the-school-behin/751923/"}, {"category": "General News", "date": "2025-07-14", "id": 8115, "image": "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 7.0, "source": "AASA News", "summary": "", "title": "College- Career- and Life-Readiness (4)", "url": "https://www.aasa.org:443/search-news?Keywords=\u0026DateFacet=\u0026SortOrder=DESC\u0026TypeFacet=\u0026RowsPerPage=20\u0026Categories=e5fb0a9e-fcda-40e6-ace9-d9bd467f4aa6"}];
+
+            const newsContainer = document.getElementById('news-container');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const loadMoreBtn = document.getElementById('load-more');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            let currentCategory = 'all';
+            let displayedNews = 6;
+            let allNews = [...newsData];
+
+            // Category mapping
+            function getCategoryStyle(category) {
+                const styles = {
+                    'Policy & Advocacy': 'bg-blue-100 text-blue-700',
+                    'Funding Opportunities': 'bg-green-100 text-green-700',
+                    'State News': 'bg-purple-100 text-purple-700',
+                    'General News': 'bg-yellow-100 text-yellow-700'
+                };
+                return styles[category] || 'bg-gray-100 text-gray-700';
+            }
+
+            // Display articles function
+            function displayNews(newsItems) {
+                newsContainer.innerHTML = '';
+                
+                newsItems.slice(0, displayedNews).forEach(article => {
+                    const newsCard = document.createElement('div');
+                    newsCard.className = 'bg-white rounded-xl shadow-md overflow-hidden news-card transition duration-300';
+                    
+                    const priorityBadge = article.relevance_score > 70 ? 
+                        '<span class="text-xs font-bold px-2 py-1 rounded-full bg-red-100 text-red-700 ml-2">🔥 High Priority</span>' : '';
+                    
+                    // Escape HTML in dynamic content
+                    const safeTitle = article.title.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    const safeSummary = article.summary.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    const safeSource = article.source.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    
+                    newsCard.innerHTML = `
+                        <img src="${article.image || 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'}" alt="${safeTitle}" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <span class="text-xs font-semibold px-2 py-1 rounded-full ${getCategoryStyle(article.category)}">
+                                        ${article.category || 'General'}
+                                    </span>
+                                    ${priorityBadge}
+                                </div>
+                                <span class="text-xs text-gray-500">${article.date}</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">${safeTitle}</h3>
+                            <p class="text-gray-600 mb-4">${safeSummary}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">Source: ${safeSource}</span>
+                                <a href="${article.url}" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                            </div>
+                        </div>
+                    `;
+                    newsContainer.appendChild(newsCard);
+                });
+
+                // Hide load more button if all articles are displayed
+                if (displayedNews >= allNews.length) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'block';
+                }
+            }
+
+            // Filter articles by category
+            function filterNewsByCategory(category) {
+                if (category === 'all') {
+                    allNews = [...newsData];
+                } else {
+                    const categoryMap = {
+                        'policy': 'Policy & Advocacy',
+                        'funding': 'Funding Opportunities', 
+                        'state': 'State News',
+                        'general': 'General News'
+                    };
+                    allNews = newsData.filter(article => article.category === categoryMap[category]);
+                }
+                displayedNews = 6;
+                displayNews(allNews);
+            }
+
+            // Search articles function
+            function searchNews() {
+                const searchTerm = searchInput.value.toLowerCase();
+                if (searchTerm.trim() === '') {
+                    allNews = [...newsData];
+                } else {
+                    allNews = newsData.filter(article => 
+                        article.title.toLowerCase().includes(searchTerm) || 
+                        article.summary.toLowerCase().includes(searchTerm) ||
+                        article.source.toLowerCase().includes(searchTerm)
+                    );
+                }
+                displayedNews = 6;
+                displayNews(allNews);
+            }
+
+            // Load more articles
+            function loadMoreNews() {
+                loadingSpinner.style.display = 'block';
+                loadMoreBtn.disabled = true;
+                
+                setTimeout(() => {
+                    displayedNews += 3;
+                    displayNews(allNews);
+                    loadingSpinner.style.display = 'none';
+                    loadMoreBtn.disabled = false;
+                }, 500);
+            }
+
+            // Event listeners
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(b => b.classList.remove('category-active'));
+                    this.classList.add('category-active');
+                    currentCategory = this.dataset.category;
+                    filterNewsByCategory(currentCategory);
+                });
+            });
+
+            searchBtn.addEventListener('click', searchNews);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchNews();
+                }
+            });
+
+            loadMoreBtn.addEventListener('click', loadMoreNews);
+
+            // Initial display
+            displayNews(allNews);
+        });
+    </script>
+</body>
+</html>
