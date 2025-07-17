@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBMS News Digest - July 17, 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .category-active {
+            border-bottom: 3px solid #3b82f6;
+        }
+        #loading-spinner {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-school text-3xl mr-3"></i>
+                    <h1 class="text-2xl md:text-3xl font-bold">SBMS News Digest</h1>
+                </div>
+                <div class="relative w-full md:w-64">
+                    <input type="text" id="search-input" placeholder="Search articles..." class="w-full py-2 px-4 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <button id="search-btn" class="absolute right-2 top-2 text-blue-600">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800">July 17, 2025</h2>
+            <p class="text-gray-600 mb-6">14 articles from 5 sources</p>
+            
+            <div class="flex overflow-x-auto pb-4 mb-6 scrollbar-hide">
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-blue-100 text-blue-700 font-medium whitespace-nowrap category-active" data-category="all">All Articles</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-gray-100 text-gray-700 font-medium whitespace-nowrap" data-category="policy">Policy & Advocacy</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-green-100 text-green-700 font-medium whitespace-nowrap" data-category="funding">Funding Opportunities</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-purple-100 text-purple-700 font-medium whitespace-nowrap" data-category="state">State News</button>
+                <button class="category-btn px-4 py-2 mx-2 rounded-full bg-yellow-100 text-yellow-700 font-medium whitespace-nowrap" data-category="general">General News</button>
+            </div>
+
+            <div id="loading-spinner" class="text-center py-10">
+                <i class="fas fa-spinner fa-spin text-4xl text-blue-500"></i>
+                <p class="mt-4 text-gray-600">Loading articles...</p>
+            </div>
+
+            <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Articles will be inserted here by JavaScript -->
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <button id="load-more" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-full shadow-md transition duration-300">
+                    Load More Articles
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-md p-6 mb-10">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">About School-Based Medicaid Services</h2>
+            <p class="text-gray-600 mb-4">
+                School-Based Medicaid Services (SBMS) provide critical health and related services to eligible students, helping schools deliver comprehensive support while receiving Medicaid reimbursement.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-700 mb-2"><i class="fas fa-chart-line mr-2"></i>Impact</h3>
+                    <p class="text-sm text-gray-600">Millions of students receive services through school Medicaid programs annually.</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-700 mb-2"><i class="fas fa-map-marked-alt mr-2"></i>Coverage</h3>
+                    <p class="text-sm text-gray-600">Programs vary by state with different eligibility and service requirements.</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-700 mb-2"><i class="fas fa-hand-holding-usd mr-2"></i>Funding</h3>
+                    <p class="text-sm text-gray-600">Federal matching funds support states in providing essential student services.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">SBMS News Digest</h3>
+                    <p class="text-gray-400">Your source for updates on school-based Medicaid services, policy changes, and funding opportunities.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-3">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><a href="https://www.cms.gov" class="text-gray-400 hover:text-white">CMS Guidelines</a></li>
+                            <li><a href="https://www.medicaid.gov" class="text-gray-400 hover:text-white">Medicaid.gov</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">State Programs</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-3">Organizations</h4>
+                        <ul class="space-y-2">
+                            <li><a href="https://www.aasa.org" class="text-gray-400 hover:text-white">AASA</a></li>
+                            <li><a href="https://www.nasn.org" class="text-gray-400 hover:text-white">NASN</a></li>
+                            <li><a href="https://www.casecec.org" class="text-gray-400 hover:text-white">CASE</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-3">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Terms of Use</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>© July SBMS News Digest. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Article data from Python backend
+            const newsData = [{"category": "Funding Opportunities", "date": "2025-07-16", "id": 3656, "image": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 100.0, "source": "The 74", "summary": "Federal funding for Alaska\u2019s adult education programs, including those supporting workforce development and English literacy, has been withheld by the U.S. Department of Education, causing immediate service cuts and staff layoffs among providers such as the Literacy Council of Alaska and Southeast Regional Resource Center. While state funds continue to support these programs, the freeze on over $1 million in federal grants has led to budget reductions and program suspensions, highlighting the need for school-based Medicaid professionals to monitor funding changes closely and adapt billing and service delivery accordingly. Ongoing discussions about restoring federal funds underscore the importance of maintaining compliance and exploring alternative funding to sustain adult education and related workforce services.", "title": "Trump Administration Freeze of Millions for Adult Education Prompts Layoffs, Cuts for Alaska", "url": "https://www.the74million.org/article/trump-administration-freeze-of-millions-for-adult-education-prompts-layoffs-cuts-for-alaska/"}, {"category": "Funding Opportunities", "date": "2025-07-16", "id": 1052, "image": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 100.0, "source": "The 74", "summary": "Texas schools face significant federal funding cuts\u2014over $600 million\u2014that threaten school-based mental health services funded largely through federal programs like the Bipartisan Safer Communities Act and Medicaid/CHIP. Despite advocacy efforts, no dedicated state funding stream for school mental health was established, complicating billing and sustainability of services such as counseling and crisis intervention. Best practices now emphasize inter-district collaboration and partnerships with local mental health agencies to maintain compliance and service delivery amid funding uncertainties, highlighting the urgent need for professional development on navigating evolving policy and funding landscapes.", "title": "Mental Health Programs Could Bear Brunt of $600M Federal Cuts to Texas Schools", "url": "https://www.the74million.org/article/mental-health-programs-could-bear-brunt-of-600m-federal-cuts-to-texas-schools/"}, {"category": "Funding Opportunities", "date": "2025-07-16", "id": 9421, "image": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 84.0, "source": "The 74", "summary": "The Trump administration\u2019s freeze on $7 billion in federal education funding, including $44 million for New Mexico K-12 schools and adult education, is jeopardizing school-based Medicaid services such as mental health programs, nursing, and counseling by forcing districts to consider cuts and hiring freezes. School districts like Albuquerque Public Schools are using reserves to maintain services but warn prolonged withholding threatens program continuity and compliance. This funding freeze highlights the need for Medicaid professionals to stay informed on policy changes, advocate for timely release of funds, and prepare for budget adjustments impacting service delivery and billing.", "title": "Trump Administration Withholding $44M in Education Funding from New Mexico", "url": "https://www.the74million.org/article/trump-administration-withholding-44m-in-education-funding-from-new-mexico/"}, {"category": "Funding Opportunities", "date": "2025-07-17", "id": 4558, "image": "https://www.the74million.org/wp-content/uploads/2025/07/Fordham-Ohio-voucher-growth.jpg", "relevance_score": 44.0, "source": "The 74", "summary": "An Ohio court ruled that the state\u0027s EdChoice voucher program, which funds private school tuition for over 140,000 students, violates the state constitution by diverting funds from public \"common schools,\" potentially impacting school-based Medicaid funding indirectly through shifts in public school resources. The ruling highlights ongoing legal and policy challenges to voucher programs, emphasizing the need for school-based Medicaid professionals to monitor state funding changes and compliance requirements closely. Stakeholders should prepare for appeals and policy shifts, while continuing to advocate for adequate public school funding and explore professional development on navigating evolving state education finance landscapes.", "title": "Ohio Judge Rules State\u2019s $700 Million Voucher Program Is Unconstitutional", "url": "https://www.the74million.org/article/ohio-judge-rules-states-700-million-voucher-program-is-unconstitutional/"}, {"category": "Funding Opportunities", "date": "2025-07-17", "id": 763, "image": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 39.099999999999994, "source": "Education Dive", "summary": "With uncertainty around research funding, international students and financial aid, institutions are shrinking budgets as they try to weather financial turmoil.", "title": "Trump 2.0 brings layoffs and budget cuts at 8 major colleges", "url": "https://www.highereddive.com/news/colleges-layoffs-budget-reductions-july-2025/752856/"}, {"category": "Policy \u0026 Advocacy", "date": "2025-07-16", "id": 8818, "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 34.0, "source": "The 74", "summary": "New Hampshire has expanded its Education Freedom Account program to universal eligibility, allowing all students access to state-funded educational services such as private tuition, therapies, and tutoring without income restrictions. This policy change aligns with a national trend toward increased parental choice and flexibility in education funding, emphasizing personalized learning and improved student outcomes. School-based Medicaid professionals should note the growing importance of adaptable funding mechanisms and compliance with evolving state policies that support diverse educational and therapeutic services.", "title": "Opinion: New Hampshire\u2019s Universal School Choice Expansion Is a Win for Students, Parents", "url": "https://www.the74million.org/article/new-hampshires-universal-school-choice-expansion-is-a-win-for-students-parents/"}, {"category": "General News", "date": "2025-07-16", "id": 2635, "image": "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 30.0, "source": "K-12 Dive", "summary": "School safety teams, training, and special education resources are key to improving response during a crisis, according to K-12 safety experts.", "title": "3 ways principals can help make schools safer", "url": "https://www.k12dive.com/news/how-principals-improve-school-safety-united-conference/753273/"}, {"category": "Policy \u0026 Advocacy", "date": "2025-07-17", "id": 481, "image": "https://imgproxy.divecdn.com/6Nh093bMaIDXLV3MgSxnAz3J9dq4YzJhocKaR1EgClE/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy01MjAyNTk5ODEuanBn.webp", "relevance_score": 19.5, "source": "Education Dive", "summary": "The credit rating agency expects the environment for the higher education sector to deteriorate in 2025, thanks to federal policy shifts and other challenges.", "title": "Fitch: Private nonprofits see lowest operating margins in a decade", "url": "https://www.highereddive.com/news/fitch-private-nonprofits-see-lowest-operating-margins-in-a-decade/753253/"}, {"category": "Policy \u0026 Advocacy", "date": "2025-07-17", "id": 8870, "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 17.5, "source": "AASA News", "summary": "", "title": "Advocacy \u0026 Policy (22)", "url": "https://www.aasa.org:443/search-news?Keywords=\u0026DateFacet=\u0026SortOrder=DESC\u0026TypeFacet=\u0026RowsPerPage=20\u0026Categories=96bcaefb-cf22-4ec7-a686-c83fbd12c820"}, {"category": "State News", "date": "2025-07-17", "id": 1170, "image": "https://imgproxy.divecdn.com/u5oQ7obEbkvs2meSzEzO9CKhpd101rr9c1KyOdMjSHI/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9EQ0wuMTEyX1NKZzFrdkcuSlBH.webp", "relevance_score": 17.4, "source": "K-12 Dive", "summary": "The dynamic closed-loop system uses groundwater to reject and absorb heat to provide year-round space conditioning for a 130-year-old elementary school, Trane Technologies says.", "title": "Chicago-area school district deploys geothermal system that\u2019s a US first", "url": "https://www.k12dive.com/news/chicago-area-school-district-deploys-geothermal-system-Trane-North-Shore-112/752770/"}, {"category": "General News", "date": "2025-07-17", "id": 9601, "image": "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 15.0, "source": "Disability Scoop", "summary": "The athletic wear giant is teaming up with Special Olympics to enhance offerings aimed at bringing youth with and without intellectual disabilities together through sports.\nThe post Nike Grows Partnership With Special Olympics appeared first on Disability Scoop.", "title": "Nike Grows Partnership With Special Olympics", "url": "https://www.disabilityscoop.com/2025/07/17/nike-grows-partnership-with-special-olympics/31542/"}, {"category": "General News", "date": "2025-07-16", "id": 9868, "image": "https://imgproxy.divecdn.com/P6Jt4OxyKFbTVy_yC2ueV3rTCNsArqaJzw1djAdGS_M/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0yMTg4NjE0MDUwLmpwZw==.webp", "relevance_score": 9.0, "source": "K-12 Dive", "summary": "Research suggests interventions resulting from students being flagged for retention are more of a key driver of literacy gains than retention itself.", "title": "3rd graders flagged for retention make small but meaningful gains, study finds", "url": "https://www.k12dive.com/news/3rd-graders-flagged-retention-small-meaningful-improvement/753214/"}, {"category": "General News", "date": "2025-07-16", "id": 7364, "image": "https://imgproxy.divecdn.com/DyjRgw8ZnsgtN8Xy3JyJUVa9yEeWs-RlnKfHOj6HoMg/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xNDEwNjA3MDU1LmpwZw==.webp", "relevance_score": 9.0, "source": "K-12 Dive", "summary": "Helping students normalize making and reflecting upon mistakes can help them build the confidence to navigate complex issues, says one expert.", "title": "How to start the school year with a focus on growth mindset", "url": "https://www.k12dive.com/news/start-school-year-with-growth-mindset/753212/"}, {"category": "General News", "date": "2025-07-17", "id": 543, "image": "https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3\u0026auto=format\u0026fit=crop\u0026w=1470\u0026q=80", "relevance_score": 7.0, "source": "AASA News", "summary": "", "title": "College- Career- and Life-Readiness (4)", "url": "https://www.aasa.org:443/search-news?Keywords=\u0026DateFacet=\u0026SortOrder=DESC\u0026TypeFacet=\u0026RowsPerPage=20\u0026Categories=e5fb0a9e-fcda-40e6-ace9-d9bd467f4aa6"}];
+
+            const newsContainer = document.getElementById('news-container');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const loadMoreBtn = document.getElementById('load-more');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            let currentCategory = 'all';
+            let displayedNews = 6;
+            let allNews = [...newsData];
+
+            // Category mapping
+            function getCategoryStyle(category) {
+                const styles = {
+                    'Policy & Advocacy': 'bg-blue-100 text-blue-700',
+                    'Funding Opportunities': 'bg-green-100 text-green-700',
+                    'State News': 'bg-purple-100 text-purple-700',
+                    'General News': 'bg-yellow-100 text-yellow-700'
+                };
+                return styles[category] || 'bg-gray-100 text-gray-700';
+            }
+
+            // Display articles function
+            function displayNews(newsItems) {
+                newsContainer.innerHTML = '';
+                
+                newsItems.slice(0, displayedNews).forEach(article => {
+                    const newsCard = document.createElement('div');
+                    newsCard.className = 'bg-white rounded-xl shadow-md overflow-hidden news-card transition duration-300';
+                    
+                    const priorityBadge = article.relevance_score > 70 ? 
+                        '<span class="text-xs font-bold px-2 py-1 rounded-full bg-red-100 text-red-700 ml-2">🔥 High Priority</span>' : '';
+                    
+                    // Escape HTML in dynamic content
+                    const safeTitle = article.title.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    const safeSummary = article.summary.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    const safeSource = article.source.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    
+                    newsCard.innerHTML = `
+                        <img src="${article.image || 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'}" alt="${safeTitle}" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <span class="text-xs font-semibold px-2 py-1 rounded-full ${getCategoryStyle(article.category)}">
+                                        ${article.category || 'General'}
+                                    </span>
+                                    ${priorityBadge}
+                                </div>
+                                <span class="text-xs text-gray-500">${article.date}</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">${safeTitle}</h3>
+                            <p class="text-gray-600 mb-4">${safeSummary}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">Source: ${safeSource}</span>
+                                <a href="${article.url}" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                            </div>
+                        </div>
+                    `;
+                    newsContainer.appendChild(newsCard);
+                });
+
+                // Hide load more button if all articles are displayed
+                if (displayedNews >= allNews.length) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'block';
+                }
+            }
+
+            // Filter articles by category
+            function filterNewsByCategory(category) {
+                if (category === 'all') {
+                    allNews = [...newsData];
+                } else {
+                    const categoryMap = {
+                        'policy': 'Policy & Advocacy',
+                        'funding': 'Funding Opportunities', 
+                        'state': 'State News',
+                        'general': 'General News'
+                    };
+                    allNews = newsData.filter(article => article.category === categoryMap[category]);
+                }
+                displayedNews = 6;
+                displayNews(allNews);
+            }
+
+            // Search articles function
+            function searchNews() {
+                const searchTerm = searchInput.value.toLowerCase();
+                if (searchTerm.trim() === '') {
+                    allNews = [...newsData];
+                } else {
+                    allNews = newsData.filter(article => 
+                        article.title.toLowerCase().includes(searchTerm) || 
+                        article.summary.toLowerCase().includes(searchTerm) ||
+                        article.source.toLowerCase().includes(searchTerm)
+                    );
+                }
+                displayedNews = 6;
+                displayNews(allNews);
+            }
+
+            // Load more articles
+            function loadMoreNews() {
+                loadingSpinner.style.display = 'block';
+                loadMoreBtn.disabled = true;
+                
+                setTimeout(() => {
+                    displayedNews += 3;
+                    displayNews(allNews);
+                    loadingSpinner.style.display = 'none';
+                    loadMoreBtn.disabled = false;
+                }, 500);
+            }
+
+            // Event listeners
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(b => b.classList.remove('category-active'));
+                    this.classList.add('category-active');
+                    currentCategory = this.dataset.category;
+                    filterNewsByCategory(currentCategory);
+                });
+            });
+
+            searchBtn.addEventListener('click', searchNews);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchNews();
+                }
+            });
+
+            loadMoreBtn.addEventListener('click', loadMoreNews);
+
+            // Initial display
+            displayNews(allNews);
+        });
+    </script>
+</body>
+</html>
